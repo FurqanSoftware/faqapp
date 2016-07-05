@@ -3,10 +3,12 @@ package data
 import (
 	"html/template"
 	"time"
+
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Article struct {
-	ID string
+	ID bson.ObjectId
 
 	CategoryID string
 

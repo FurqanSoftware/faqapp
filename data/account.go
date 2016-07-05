@@ -1,9 +1,13 @@
 package data
 
-import "time"
+import (
+	"time"
+
+	"gopkg.in/mgo.v2/bson"
+)
 
 type Account struct {
-	ID string
+	ID bson.ObjectId
 
 	Handle   string
 	Password AccountPassword

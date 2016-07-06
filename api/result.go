@@ -24,6 +24,7 @@ func serveJSON(w http.ResponseWriter, r *http.Request, v interface{}) {
 	err := json.NewEncoder(b).Encode(v)
 	catch(err)
 
+	w.Header().Set("Content-Type", "application/json")
 	_, err = io.Copy(w, b)
 	catch(err)
 }

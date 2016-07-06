@@ -19,6 +19,10 @@ func HandleActionError(w http.ResponseWriter, r *http.Request, err error) {
 	}
 }
 
+func ServeUnauthorized(w http.ResponseWriter, r *http.Request) {
+	ServeError(w, r, "Unauthorized", http.StatusUnauthorized)
+}
+
 func ServeBadRequest(w http.ResponseWriter, r *http.Request) {
 	ServeError(w, r, "Bad Request", http.StatusBadRequest)
 }

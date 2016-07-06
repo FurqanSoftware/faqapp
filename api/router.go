@@ -10,15 +10,21 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		Name("ServeAccountList").
 		Methods("GET").
 		Path("/accounts").
-		Handler(ServeAccountList{
+		Handler(RequireSession{
 			AccountRepo: db.Accounts{Session: dbSess},
+			Handler: ServeAccountList{
+				AccountRepo: db.Accounts{Session: dbSess},
+			},
 		})
 	r.NewRoute().
 		Name("CreateAccount").
 		Methods("POST").
 		Path("/accounts").
-		Handler(CreateAccount{
+		Handler(RequireSession{
 			AccountRepo: db.Accounts{Session: dbSess},
+			Handler: CreateAccount{
+				AccountRepo: db.Accounts{Session: dbSess},
+			},
 		})
 
 	r.NewRoute().

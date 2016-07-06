@@ -11,6 +11,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		Methods("GET").
 		Path("/").
 		Handler(ServeHomepage{
+			ArticleStore:  db.ArticleStore{Session: dbSess},
 			CategoryStore: db.CategoryStore{Session: dbSess},
 		})
 }

@@ -10,9 +10,10 @@
 				<div class="uk-panel uk-panel-space">
 					<h3 class="uk-panel-title">{{$cat.Title}}</h3>
 					<ul class="uk-list uk-list-space">
-						<li><a href="#">What is Toph?</a></li>
-						<li><a href="#">How do I contact Toph support?</a></li>
-						<li><a href="#">Who are you guys?</a></li>
+						{{$arts := index $.TopCategoryArticles $cat.ID.Hex}}
+						{{range $art := $arts}}
+							<li><a href="#">{{$art.Title}}</a></li>
+						{{end}}
 					</ul>
 				</div>
 			</div>

@@ -5,18 +5,26 @@
 		</div>
 	</div>
 	<div class="uk-grid">
-		{{range $cat := .Categories}}
-			<div class="uk-width-1-3">
-				<div class="uk-panel uk-panel-space">
-					<h3 class="uk-panel-title">{{$cat.Title}}</h3>
-					<ul class="uk-list uk-list-space">
-						{{$arts := index $.TopCategoryArticles $cat.ID.Hex}}
-						{{range $art := $arts}}
-							<li><a href="/{{$cat.Slug}}/{{$art.Slug}}">{{$art.Title}}</a></li>
-						{{end}}
-					</ul>
-				</div>
+		<div class="uk-width-4-6 uk-push-1-6">
+			<div class="uk-grid">
+				{{range $cat := .Categories}}
+					<div class="uk-width-3-6">
+						<div class="uk-panel uk-panel-header uk-panel-space">
+							<h3 class="uk-panel-title">{{$cat.Title}}</h3>
+							<ul class="uk-list uk-list-space">
+								{{$arts := index $.TopCategoryArticles $cat.ID.Hex}}
+								{{range $i, $art := $arts}}
+									{{if eq $i 7}}
+										<li><a href="/{{$cat.Slug}}">More..</a></li>
+									{{else}}
+										<li><a href="/{{$cat.Slug}}/{{$art.Slug}}">{{$art.Title}}</a></li>
+									{{end}}
+								{{end}}
+							</ul>
+						</div>
+					</div>
+				{{end}}
 			</div>
-		{{end}}
+		</div>
 	</div>
 {{end}}

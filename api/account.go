@@ -48,13 +48,13 @@ func (h ServeAccountList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ServeResult(w, r, resp)
 }
 
+type CreateAccount struct {
+	AccountRepo db.Accounts
+}
+
 type CreateAccountVal struct {
 	Handle   string `json:"handle"`
 	Password string `json:"password"`
-}
-
-type CreateAccount struct {
-	AccountRepo db.Accounts
 }
 
 type CreateAccountRes struct {

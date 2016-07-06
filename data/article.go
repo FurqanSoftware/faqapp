@@ -8,16 +8,28 @@ import (
 )
 
 type Article struct {
-	ID bson.ObjectId
+	ID bson.ObjectId `bson:"id"`
 
-	CategoryID string
+	CategoryID bson.ObjectId `bson:"category_id"`
 
-	Title string
-	Order int
+	Title string `bson:"title"`
+	Slug  string `bson:"slug"`
 
-	Content     string
-	ContentHTML template.HTML
+	Order int `bson:"order"`
 
-	CreatedAt  time.Time
-	ModifiedAt time.Time
+	Content     string        `bson:"content"`
+	ContentHTML template.HTML `bson:"content_html"`
+
+	CreatedAt  time.Time `bson:"created_at"`
+	ModifiedAt time.Time `bson:"modified_at"`
+}
+
+func (a *Article) PreCreate() {
+	a.ID = bson.NewObjectId()
+	a.CreatedAt = time.Now()
+	a.ModifiedAt = a.CreatedAt
+}
+
+func (a *Article) PreModify() {
+	a.ModifiedAt = time.Now()
 }

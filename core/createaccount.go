@@ -10,7 +10,7 @@ type CreateAccount struct {
 	Password string
 	FirstIP  string
 
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 func (a CreateAccount) Validate() error {
@@ -36,7 +36,7 @@ func (a CreateAccount) Do() (res Result, err error) {
 	if err != nil {
 		return nil, err
 	}
-	err = a.AccountRepo.Put(&acc)
+	err = a.AccountStore.Put(&acc)
 	if err != nil {
 		return nil, DatabaseError{"CreateAccount", err}
 	}

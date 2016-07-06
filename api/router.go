@@ -11,9 +11,9 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		Methods("GET").
 		Path("/accounts").
 		Handler(RequireSession{
-			AccountRepo: db.Accounts{Session: dbSess},
+			AccountStore: db.AccountStore{Session: dbSess},
 			Handler: ServeAccountList{
-				AccountRepo: db.Accounts{Session: dbSess},
+				AccountStore: db.AccountStore{Session: dbSess},
 			},
 		})
 	r.NewRoute().
@@ -21,9 +21,9 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		Methods("POST").
 		Path("/accounts").
 		Handler(RequireSession{
-			AccountRepo: db.Accounts{Session: dbSess},
+			AccountStore: db.AccountStore{Session: dbSess},
 			Handler: CreateAccount{
-				AccountRepo: db.Accounts{Session: dbSess},
+				AccountStore: db.AccountStore{Session: dbSess},
 			},
 		})
 
@@ -32,6 +32,6 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		Methods("POST").
 		Path("/sessions").
 		Handler(CreateSession{
-			AccountRepo: db.Accounts{Session: dbSess},
+			AccountStore: db.AccountStore{Session: dbSess},
 		})
 }

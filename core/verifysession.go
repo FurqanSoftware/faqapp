@@ -11,7 +11,7 @@ import (
 type VerifySession struct {
 	Claims jwt.MapClaims
 
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 func (a VerifySession) Do() (res Result, err error) {
@@ -32,7 +32,7 @@ func (a VerifySession) Do() (res Result, err error) {
 			Okay: false,
 		}, nil
 	}
-	acc, err := a.AccountRepo.Get(bson.ObjectIdHex(idStr))
+	acc, err := a.AccountStore.Get(bson.ObjectIdHex(idStr))
 	if err != nil {
 		return nil, DatabaseError{"VerifySession", err}
 	}

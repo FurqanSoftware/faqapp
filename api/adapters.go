@@ -9,8 +9,8 @@ import (
 )
 
 type RequireSession struct {
-	AccountRepo db.Accounts
-	Handler     http.Handler
+	AccountStore db.AccountStore
+	Handler      http.Handler
 }
 
 func (h RequireSession) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -21,8 +21,8 @@ func (h RequireSession) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	res, err := core.Do(core.VerifySession{
-		Claims:      claims,
-		AccountRepo: h.AccountRepo,
+		Claims:       claims,
+		AccountStore: h.AccountStore,
 	})
 	if err != nil {
 		log.Println("verify session:", err)

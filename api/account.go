@@ -10,7 +10,7 @@ import (
 )
 
 type ServeAccountList struct {
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 type ServeAccountListRes []ServeAccountListResItem
@@ -26,7 +26,7 @@ type ServeAccountListResItem struct {
 
 func (h ServeAccountList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	res, err := core.Do(core.FetchAccountList{
-		AccountRepo: h.AccountRepo,
+		AccountStore: h.AccountStore,
 	})
 	if err != nil {
 		log.Println("fetch account list:", err)
@@ -49,7 +49,7 @@ func (h ServeAccountList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 type CreateAccount struct {
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 type CreateAccountVal struct {
@@ -71,9 +71,9 @@ func (h CreateAccount) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res, err := core.Do(core.CreateAccount{
-		Handle:      body.Handle,
-		Password:    body.Password,
-		AccountRepo: h.AccountRepo,
+		Handle:       body.Handle,
+		Password:     body.Password,
+		AccountStore: h.AccountStore,
 	})
 	if err != nil {
 		log.Println("create account:", err)

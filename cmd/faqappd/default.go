@@ -9,7 +9,7 @@ import (
 
 func CreateDefaultAccount(dbSess *db.Session) error {
 	res, err := core.Do(core.CreateDefaultAccount{
-		AccountRepo: db.Accounts{Session: dbSess},
+		AccountStore: db.AccountStore{Session: dbSess},
 	})
 	if res.(core.CreateDefaultAccountRes).Created {
 		log.Println("default account created")

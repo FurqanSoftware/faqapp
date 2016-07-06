@@ -9,7 +9,7 @@ import (
 )
 
 type CreateSession struct {
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 type CreateSessionVal struct {
@@ -32,9 +32,9 @@ func (h CreateSession) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res, err := core.Do(core.CreateSession{
-		Handle:      body.Handle,
-		Password:    body.Password,
-		AccountRepo: h.AccountRepo,
+		Handle:       body.Handle,
+		Password:     body.Password,
+		AccountStore: h.AccountStore,
 	})
 	if err != nil {
 		log.Println("create session:", err)

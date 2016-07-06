@@ -8,11 +8,11 @@ import (
 )
 
 type FetchAccountList struct {
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 func (a FetchAccountList) Do() (Result, error) {
-	accs, err := a.AccountRepo.List(0, math.MaxInt32)
+	accs, err := a.AccountStore.List(0, math.MaxInt32)
 	if err != nil {
 		return nil, DatabaseError{"FetchAccountList", err}
 	}

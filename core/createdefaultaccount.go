@@ -6,11 +6,11 @@ import (
 )
 
 type CreateDefaultAccount struct {
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 func (a CreateDefaultAccount) Do() (res Result, err error) {
-	accs, err := a.AccountRepo.List(0, 1)
+	accs, err := a.AccountStore.List(0, 1)
 	if err != nil {
 		return nil, DatabaseError{"CreateDefaultAccount", err}
 	}
@@ -27,7 +27,7 @@ func (a CreateDefaultAccount) Do() (res Result, err error) {
 	if err != nil {
 		return nil, err
 	}
-	err = a.AccountRepo.Put(&acc)
+	err = a.AccountStore.Put(&acc)
 	if err != nil {
 		return nil, DatabaseError{"CreateDefaultAccount", err}
 	}

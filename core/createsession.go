@@ -12,11 +12,11 @@ type CreateSession struct {
 	Handle   string
 	Password string
 
-	AccountRepo db.Accounts
+	AccountStore db.AccountStore
 }
 
 func (a CreateSession) Do() (res Result, err error) {
-	acc, err := a.AccountRepo.GetByHandle(a.Handle)
+	acc, err := a.AccountStore.GetByHandle(a.Handle)
 	if err != nil {
 		return nil, DatabaseError{"CreateSession", err}
 	}

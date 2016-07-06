@@ -30,7 +30,7 @@ func (h ServeHomepage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	topCatArts := map[string][]data.Article{}
 	for _, cat := range cats {
-		res, err := core.Do(core.FetchTopCategoryArticleList{
+		res, err := core.Do(core.FetchTopArticleList{
 			CategoryID:   cat.ID.Hex(),
 			ArticleStore: h.ArticleStore,
 		})
@@ -39,7 +39,7 @@ func (h ServeHomepage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
-		topCatArts[cat.ID.Hex()] = res.(core.FetchTopCategoryArticletListRes).Articles
+		topCatArts[cat.ID.Hex()] = res.(core.FetchTopArticleListRes).Articles
 	}
 
 	err = HomepageTpl.Execute(w, struct {

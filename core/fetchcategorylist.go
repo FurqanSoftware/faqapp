@@ -12,12 +12,12 @@ type FetchCategoryList struct {
 }
 
 func (a FetchCategoryList) Do() (Result, error) {
-	accs, err := a.CategoryStore.List(0, math.MaxInt32)
+	cats, err := a.CategoryStore.List(0, math.MaxInt32)
 	if err != nil {
 		return nil, DatabaseError{"FetchCategoryList", err}
 	}
 	return FetchCategoryListRes{
-		Categories: accs,
+		Categories: cats,
 	}, nil
 }
 

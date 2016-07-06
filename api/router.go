@@ -31,15 +31,21 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		Name("FetchCategoryList").
 		Methods("GET").
 		Path("/categories").
-		Handler(ServeCategoryList{
-			CategoryStore: db.CategoryStore{Session: dbSess},
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			Handler: ServeCategoryList{
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
 		})
 	r.NewRoute().
 		Name("CreateCategory").
 		Methods("POST").
 		Path("/categories").
-		Handler(CreateCategory{
-			CategoryStore: db.CategoryStore{Session: dbSess},
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			Handler: CreateCategory{
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
 		})
 
 	r.NewRoute().

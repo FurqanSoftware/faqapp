@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Faqapp</title>
+
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.26.3/css/uikit.min.css" media="screen" charset="utf-8">
+		<style media="screen">
+			html,
+			body,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			input {
+				font-family: 'Source Sans Pro';
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="uk-navbar">
+			<div class="uk-container uk-container-center">
+				<a href="/" class="uk-navbar-brand uk-navbar-center">Faqapp</a>
+			</div>
+		</nav>
+		<div class="uk-container uk-container-center">
+			<div class="uk-grid">
+				<div class="uk-width-1-1">
+					<ul class="uk-breadcrumb">
+						<!-- <li><a href="">Faqapp</a></li>
+						<li><a href=""></a></li>
+						<li class="uk-active"><span>...</span></li> -->
+					</ul>
+				</div>
+			</div>
+			{{template "content" .}}
+		</div>
+	</body>
+</html>

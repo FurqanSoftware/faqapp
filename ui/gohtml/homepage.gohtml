@@ -1,0 +1,21 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<input type="text" placeholder="How to ...?" class="uk-form-large uk-width-1-1">
+		</div>
+	</div>
+	<div class="uk-grid">
+		{{range $cat := .Categories}}
+			<div class="uk-width-1-3">
+				<div class="uk-panel uk-panel-space">
+					<h3 class="uk-panel-title">{{$cat.Title}}</h3>
+					<ul class="uk-list uk-list-space">
+						<li><a href="#">What is Toph?</a></li>
+						<li><a href="#">How do I contact Toph support?</a></li>
+						<li><a href="#">Who are you guys?</a></li>
+					</ul>
+				</div>
+			</div>
+		{{end}}
+	</div>
+{{end}}

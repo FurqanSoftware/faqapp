@@ -26,10 +26,10 @@ func (s ArticleStore) Get(id bson.ObjectId) (*data.Article, error) {
 	return &art, nil
 }
 
-func (s ArticleStore) GetBySlug(slug string) (*data.Article, error) {
+func (s ArticleStore) GetBySlug(catID bson.ObjectId, slug string) (*data.Article, error) {
 	art := data.Article{}
 	err := s.Session.DB("").C(ArticleC).
-		Find(bson.M{"slug": slug}).
+		Find(bson.M{"category_id": catID, "slug": slug}).
 		One(&art)
 	if err == mgo.ErrNotFound {
 		return nil, nil

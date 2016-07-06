@@ -1,6 +1,15 @@
 {{define "content"}}
 	<div class="uk-grid">
 		<div class="uk-width-4-6 uk-push-1-6">
+			<ul class="uk-breadcrumb">
+				<li><a href="/">Home</a></li>
+				<li><a href="/{{.Category.Slug}}">{{.Category.Title}}</a></li>
+				<li class="uk-active"><span>{{.Article.Title}}</span></li>
+			</ul>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
 			<h1>{{.Article.Title}}</h1>
 		</div>
 	</div>

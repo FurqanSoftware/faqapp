@@ -22,9 +22,17 @@ type ServeArticleView struct {
 func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	res, err := core.Do(core.FetchArticleBySlug{
-		Slug:         vars["article_slug"],
-		ArticleStore: h.ArticleStore,
+	res, err := core.Do(core.FetchCategoryBySlug{
+		Slug:          vars["category_slug"],
+		CategoryStore: h.CategoryStore,
+	})
+	cat := res.(core.FetchCategoryBySlugRes).Category
+
+	res, err = core.Do(core.FetchArticleBySlug{
+		CategoryID:    cat.ID.Hex(),
+		Slug:          vars["article_slug"],
+		ArticleStore:  h.ArticleStore,
+		CategoryStore: h.CategoryStore,
 	})
 	if err != nil {
 		log.Println("fetch article list:", err)
@@ -34,9 +42,11 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	art := res.(core.FetchArticleBySlugRes).Article
 
 	err = ArticleViewTpl.Execute(w, struct {
-		Article *data.Article
+		Article  *data.Article
+		Category *data.Category
 	}{
-		Article: art,
+		Article:  art,
+		Category: cat,
 	})
 	if err != nil {
 		log.Println("execute template:", err)

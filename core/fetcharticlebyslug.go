@@ -3,16 +3,24 @@ package core
 import (
 	"git.furqan.io/faqapp/faqapp/data"
 	"git.furqan.io/faqapp/faqapp/db"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type FetchArticleBySlug struct {
-	Slug string
+	CategoryID string
+	Slug       string
 
-	ArticleStore db.ArticleStore
+	ArticleStore  db.ArticleStore
+	CategoryStore db.CategoryStore
 }
 
 func (a FetchArticleBySlug) Do() (Result, error) {
-	art, err := a.ArticleStore.GetBySlug(a.Slug)
+	cat, err := a.CategoryStore.Get(bson.ObjectIdHex(a.CategoryID))
+	if err != nil {
+		return nil, DatabaseError{"CreateArticle", err}
+	}
+
+	art, err := a.ArticleStore.GetBySlug(cat.ID, a.Slug)
 	if err != nil {
 		return nil, DatabaseError{"FetchArticleBySlug", err}
 	}

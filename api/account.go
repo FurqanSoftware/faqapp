@@ -29,8 +29,9 @@ func (h ServeAccountList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		AccountRepo: h.AccountRepo,
 	})
 	if err != nil {
-		log.Print("fetch account list:", err)
+		log.Println("fetch account list:", err)
 		ServeInternalServerError(w, r)
+		return
 	}
 
 	resp := ServeAccountListRes{}
@@ -56,12 +57,17 @@ type CreateAccount struct {
 	AccountRepo db.Accounts
 }
 
+type CreateAccountRes struct {
+	ID string `json:"id"`
+}
+
 func (h CreateAccount) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	body := CreateAccountVal{}
 	err := ParseRequestBody(r, &body)
 	if err != nil {
-		log.Print("parse request body:", err)
+		log.Println("parse request body:", err)
 		ServeBadRequest(w, r)
+		return
 	}
 
 	res, err := core.Do(core.CreateAccount{
@@ -70,9 +76,13 @@ func (h CreateAccount) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		AccountRepo: h.AccountRepo,
 	})
 	if err != nil {
-		log.Print("create account:", err)
+		log.Println("create account:", err)
 		ServeInternalServerError(w, r)
+		return
 	}
 
-	ServeResult(w, r, res)
+	resp := CreateAccountRes{
+		ID: res.(core.CreateAccountRes).Account.ID.Hex(),
+	}
+	ServeResult(w, r, resp)
 }

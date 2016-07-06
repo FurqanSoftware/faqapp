@@ -12,7 +12,7 @@
 					<ul class="uk-list uk-list-space">
 						{{$arts := index $.TopCategoryArticles $cat.ID.Hex}}
 						{{range $art := $arts}}
-							<li><a href="#">{{$art.Title}}</a></li>
+							<li><a href="/{{$cat.Slug}}/{{$art.Slug}}">{{$art.Title}}</a></li>
 						{{end}}
 					</ul>
 				</div>

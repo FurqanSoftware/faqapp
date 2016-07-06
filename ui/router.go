@@ -14,4 +14,12 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 			ArticleStore:  db.ArticleStore{Session: dbSess},
 			CategoryStore: db.CategoryStore{Session: dbSess},
 		})
+	r.NewRoute().
+		Name("ServeAccountList").
+		Methods("GET").
+		Path("/{category_slug}/{article_slug}").
+		Handler(ServeArticleView{
+			ArticleStore:  db.ArticleStore{Session: dbSess},
+			CategoryStore: db.CategoryStore{Session: dbSess},
+		})
 }

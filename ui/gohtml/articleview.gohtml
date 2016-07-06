@@ -1,0 +1,14 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<h1>{{.Article.Title}}</h1>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<div class="uk-panel uk-panel-space">
+				{{.Article.ContentHTML}}
+			</div>
+		</div>
+	</div>
+{{end}}

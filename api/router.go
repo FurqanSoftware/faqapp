@@ -28,6 +28,14 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		})
 
 	r.NewRoute().
+		Name("CreateCategory").
+		Methods("POST").
+		Path("/categories").
+		Handler(CreateCategory{
+			CategoryStore: db.CategoryStore{Session: dbSess},
+		})
+
+	r.NewRoute().
 		Name("CreateSession").
 		Methods("POST").
 		Path("/sessions").

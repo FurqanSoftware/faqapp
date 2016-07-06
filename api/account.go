@@ -30,7 +30,7 @@ func (h ServeAccountList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("fetch account list:", err)
-		ServeInternalServerError(w, r)
+		HandleActionError(w, r, err)
 		return
 	}
 
@@ -77,7 +77,7 @@ func (h CreateAccount) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("create account:", err)
-		ServeInternalServerError(w, r)
+		HandleActionError(w, r, err)
 		return
 	}
 

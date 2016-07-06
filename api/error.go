@@ -5,7 +5,19 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+
+	"git.furqan.io/faqapp/faqapp/core"
 )
+
+func HandleActionError(w http.ResponseWriter, r *http.Request, err error) {
+	switch err := err.(type) {
+	case core.ValidationError:
+		ServeError(w, r, err.Element+" is "+string(err.Issue), http.StatusBadRequest)
+
+	default:
+		ServeInternalServerError(w, r)
+	}
+}
 
 func ServeBadRequest(w http.ResponseWriter, r *http.Request) {
 	ServeError(w, r, "Bad Request", http.StatusBadRequest)

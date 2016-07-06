@@ -49,6 +49,18 @@ func InitRouter(r *mux.Router, dbSess *db.Session) {
 		})
 
 	r.NewRoute().
+		Name("CreateArticle").
+		Methods("POST").
+		Path("/categories/{category_id}/articles").
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			Handler: CreateArticle{
+				ArticleStore:  db.ArticleStore{Session: dbSess},
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
+		})
+
+	r.NewRoute().
 		Name("CreateSession").
 		Methods("POST").
 		Path("/sessions").

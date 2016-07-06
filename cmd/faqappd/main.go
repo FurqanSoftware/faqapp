@@ -21,6 +21,11 @@ func main() {
 		log.Fatalln("open database session:", err)
 	}
 
+	err = CreateDefaultAccount(dbSess)
+	if err != nil {
+		log.Fatalln("create default account:", err)
+	}
+
 	r := mux.NewRouter()
 	InitRouter(r, dbSess)
 

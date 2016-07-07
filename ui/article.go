@@ -46,7 +46,7 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	art := res.(core.FetchArticleBySlugRes).Article
 
-	err = ArticleViewTpl.Execute(w, struct {
+	err = ExecuteTemplate(ArticleViewTpl, w, struct {
 		Article  *data.Article
 		Category *data.Category
 	}{
@@ -92,7 +92,7 @@ func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		artCat[art.ID.Hex()] = res.(core.FetchCategoryRes).Category
 	}
 
-	err = BackArticleListTpl.Execute(w, struct {
+	err = ExecuteTemplate(BackArticleListTpl, w, struct {
 		Articles        []data.Article
 		ArticleCategory map[string]*data.Category
 	}{
@@ -123,7 +123,7 @@ func (h ServeBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reques
 	}
 	cats := res.(core.FetchCategoryListRes).Categories
 
-	err = BackArticleNewFormTpl.Execute(w, struct {
+	err = ExecuteTemplate(BackArticleNewFormTpl, w, struct {
 		Categories []data.Category
 	}{
 		Categories: cats,
@@ -206,7 +206,7 @@ func (h ServeBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	}
 	art := res.(core.FetchArticleRes).Article
 
-	err = BackArticleEditFormTpl.Execute(w, struct {
+	err = ExecuteTemplate(BackArticleEditFormTpl, w, struct {
 		Article    *data.Article
 		Categories []data.Category
 	}{

@@ -45,7 +45,7 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	arts := res.(core.FetchCategoryArticleListRes).Articles
 
-	err = CategoryViewTpl.Execute(w, struct {
+	err = ExecuteTemplate(CategoryViewTpl, w, struct {
 		Category *data.Category
 		Articles []data.Article
 	}{
@@ -76,7 +76,7 @@ func (h ServeBackCategoryList) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	}
 	cats := res.(core.FetchCategoryListRes).Categories
 
-	err = BackCategoryListTpl.Execute(w, struct {
+	err = ExecuteTemplate(BackCategoryListTpl, w, struct {
 		Categories []data.Category
 	}{
 		Categories: cats,
@@ -94,7 +94,7 @@ type ServeBackCategoryNewForm struct {
 }
 
 func (h ServeBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := BackCategoryNewFormTpl.Execute(w, struct{}{})
+	err := ExecuteTemplate(BackCategoryNewFormTpl, w, struct{}{})
 	if err != nil {
 		log.Println("execute template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -156,7 +156,7 @@ func (h ServeBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 	}
 	cat := res.(core.FetchCategoryRes).Category
 
-	err = BackCategoryEditFormTpl.Execute(w, struct {
+	err = ExecuteTemplate(BackCategoryEditFormTpl, w, struct {
 		Category *data.Category
 	}{
 		Category: cat,

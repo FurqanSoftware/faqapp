@@ -43,7 +43,7 @@ func (h ServeHomepage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		topCatArts[cat.ID.Hex()] = res.(core.FetchTopCategoryArticleListRes).Articles
 	}
 
-	err = HomepageTpl.Execute(w, struct {
+	err = ExecuteTemplate(HomepageTpl, w, struct {
 		Categories          []data.Category
 		TopCategoryArticles map[string][]data.Article
 	}{

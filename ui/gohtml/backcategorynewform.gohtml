@@ -1,0 +1,30 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<ul class="uk-tab" data-uk-tab>
+				{{template "backtabset" "categories"}}
+			</ul>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<div class="uk-panel">
+				<form class="uk-form" action="/_/categories/new" method="POST">
+					<legend>New Category</legend>
+					<div class="uk-form-row">
+						<input type="text" name="title" class="uk-width-4-6" placeholder="Title">
+					</div>
+					<div class="uk-form-row">
+						<input type="text" name="slug" class="uk-width-4-6" placeholder="Slug">
+					</div>
+					<div class="uk-form-row">
+						<input type="number" name="order" class="uk-width-4-6" placeholder="Order">
+					</div>
+					<div class="uk-form-row">
+						<button class="uk-button">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{{end}}

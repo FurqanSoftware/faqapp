@@ -59,7 +59,7 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-var BackCategoryListTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backcategorylist.gohtml"))
+var BackCategoryListTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backcategorylist.gohtml", "ui/gohtml/backtabset.gohtml"))
 
 type ServeBackCategoryList struct {
 	CategoryStore db.CategoryStore
@@ -86,4 +86,52 @@ func (h ServeBackCategoryList) ServeHTTP(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
+}
+
+var BackCategoryNewFormTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backcategorynewform.gohtml", "ui/gohtml/backtabset.gohtml"))
+
+type ServeBackCategoryNewForm struct {
+}
+
+func (h ServeBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	err := BackCategoryNewFormTpl.Execute(w, struct{}{})
+	if err != nil {
+		log.Println("execute template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+}
+
+type HandleBackCategoryNewForm struct {
+	CategoryStore db.CategoryStore
+}
+
+type HandleBackCategoryNewFormVal struct {
+	Title string `schema:"title"`
+	Slug  string `schema:"slug"`
+	Order int    `schema:"order"`
+}
+
+func (h HandleBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	body := HandleBackCategoryNewFormVal{}
+	err := ParseRequestBody(r, &body)
+	if err != nil {
+		log.Println("parse request body:", err)
+		http.Error(w, "Bad Request", http.StatusBadRequest)
+		return
+	}
+
+	_, err = core.Do(core.CreateCategory{
+		Title:         body.Title,
+		Slug:          body.Slug,
+		Order:         body.Order,
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("create session:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/_/categories", http.StatusSeeOther)
 }

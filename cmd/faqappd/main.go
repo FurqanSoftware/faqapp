@@ -8,6 +8,7 @@ import (
 	"git.furqan.io/faqapp/faqapp/cfg"
 	"git.furqan.io/faqapp/faqapp/db"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 )
 
 func main() {
@@ -26,8 +27,10 @@ func main() {
 		log.Fatalln("create default account:", err)
 	}
 
+	sessStore := sessions.NewCookieStore([]byte(cfg.Secret))
+
 	r := mux.NewRouter()
-	InitRouter(r, dbSess)
+	InitRouter(r, dbSess, sessStore)
 
 	err = http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), r)
 	if err != nil {

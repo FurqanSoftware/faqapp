@@ -3,9 +3,25 @@ package ui
 import (
 	"git.furqan.io/faqapp/faqapp/db"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 )
 
-func InitRouter(r *mux.Router, dbSess *db.Session) {
+func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
+
+	r.NewRoute().
+		Name("ServeLoginForm").
+		Methods("GET").
+		Path("/_/login").
+		Handler(ServeLoginForm{})
+	r.NewRoute().
+		Name("HandleLoginForm").
+		Methods("POST").
+		Path("/_/login").
+		Handler(HandleLoginForm{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+		})
+
 	r.NewRoute().
 		Name("ServeAccountList").
 		Methods("GET").

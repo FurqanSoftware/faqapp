@@ -1,0 +1,22 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-2-6 uk-push-2-6">
+			<div class="uk-panel">
+				<form class="uk-form" action="/_/login" method="POST">
+					<fieldset data-uk-margin>
+						<legend>Login</legend>
+						<div class="uk-form-row">
+							<input type="text" name="handle" class="uk-width-4-6" placeholder="Handle">
+						</div>
+						<div class="uk-form-row">
+							<input type="password" name="password" class="uk-width-4-6" placeholder="Password">
+						</div>
+						<div class="uk-form-row">
+							<button class="uk-button">Login</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+{{end}}

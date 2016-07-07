@@ -22,6 +22,19 @@
 			"Rev": "9fa818a44c2bf1396a17f9d5a3c0f6dd39d2ff8e"
 		},
 		{
+			"ImportPath": "github.com/gorilla/schema",
+			"Rev": "8aac656cd31cfb73a9dfd142494864fa0b84f723"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Comment": "v1.1-2-gff35634",
+			"Rev": "ff356348f74133a59d3e93aa24b5b4551b6fe90d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "56ba4b0a11da87516629a57408a5f7e4c8ea7b0b"
+		},
+		{
 			"ImportPath": "golang.org/x/crypto/pbkdf2",
 			"Rev": "0c565bf13221fb55497d7ae2bb95694db1fd1bff"
 		},

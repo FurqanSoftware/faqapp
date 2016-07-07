@@ -48,7 +48,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 			Handler:      ServeBackCategoryNewForm{},
 		})
 	r.NewRoute().
-		Name("ServeBackCategoryNewForm").
+		Name("HandleBackCategoryNewForm").
 		Methods("POST").
 		Path("/_/categories/new").
 		Handler(RequireSession{
@@ -70,7 +70,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 			},
 		})
 	r.NewRoute().
-		Name("ServeBackCategoryEditForm").
+		Name("HandleBackCategoryEditForm").
 		Methods("POST").
 		Path("/_/categories/{category_id}/edit").
 		Handler(RequireSession{
@@ -88,6 +88,29 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 			AccountStore: db.AccountStore{Session: dbSess},
 			SessionStore: sessStore,
 			Handler: ServeBackArticleList{
+				ArticleStore:  db.ArticleStore{Session: dbSess},
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
+		})
+	r.NewRoute().
+		Name("ServeBackArticleNewForm").
+		Methods("GET").
+		Path("/_/articles/new").
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+			Handler: ServeBackArticleNewForm{
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
+		})
+	r.NewRoute().
+		Name("HandleBackArticleNewForm").
+		Methods("POST").
+		Path("/_/articles/new").
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+			Handler: HandleBackArticleNewForm{
 				ArticleStore:  db.ArticleStore{Session: dbSess},
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},

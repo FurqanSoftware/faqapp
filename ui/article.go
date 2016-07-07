@@ -105,3 +105,72 @@ func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 }
+
+var BackArticleNewFormTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backarticlenewform.gohtml", "ui/gohtml/backtabset.gohtml"))
+
+type ServeBackArticleNewForm struct {
+	CategoryStore db.CategoryStore
+}
+
+func (h ServeBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	res, err := core.Do(core.FetchCategoryList{
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("fetch category list:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	cats := res.(core.FetchCategoryListRes).Categories
+
+	err = BackArticleNewFormTpl.Execute(w, struct {
+		Categories []data.Category
+	}{
+		Categories: cats,
+	})
+	if err != nil {
+		log.Println("execute template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+}
+
+type HandleBackArticleNewForm struct {
+	ArticleStore  db.ArticleStore
+	CategoryStore db.CategoryStore
+}
+
+type HandleBackArticleNewFormVal struct {
+	CategoryID string `schema:"category_id"`
+	Title      string `schema:"title"`
+	Slug       string `schema:"slug"`
+	Order      int    `schema:"order"`
+	Content    string `schema:"content"`
+}
+
+func (h HandleBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	body := HandleBackArticleNewFormVal{}
+	err := ParseRequestBody(r, &body)
+	if err != nil {
+		log.Println("parse request body:", err)
+		http.Error(w, "Bad Request", http.StatusBadRequest)
+		return
+	}
+
+	_, err = core.Do(core.CreateArticle{
+		CategoryID:    body.CategoryID,
+		Title:         body.Title,
+		Slug:          body.Slug,
+		Order:         body.Order,
+		Content:       body.Content,
+		ArticleStore:  h.ArticleStore,
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("create article:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/_/articles", http.StatusSeeOther)
+}

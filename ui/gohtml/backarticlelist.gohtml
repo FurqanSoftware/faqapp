@@ -1,0 +1,35 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<ul class="uk-tab" data-uk-tab>
+				{{template "backtabset" "articles"}}
+			</ul>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<div>
+				<a class="uk-button" href="/_/articles/new">New</a>
+			</div>
+			<table class="uk-table">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Category</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{range $art := .Articles}}
+						{{$cat := index $.ArticleCategory $art.ID.Hex}}
+						<tr>
+							<td>
+								<a href="/_/articles/{{$art.ID.Hex}}">{{$art.Title}}</a>
+							</td>
+							<td>{{$cat.Title}}</td>
+						</tr>
+					{{end}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{{end}}

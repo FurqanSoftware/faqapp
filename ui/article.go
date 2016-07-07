@@ -59,3 +59,49 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+var BackArticleListTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backarticlelist.gohtml", "ui/gohtml/backtabset.gohtml"))
+
+type ServeBackArticleList struct {
+	ArticleStore  db.ArticleStore
+	CategoryStore db.CategoryStore
+}
+
+func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	res, err := core.Do(core.FetchArticleList{
+		ArticleStore: h.ArticleStore,
+	})
+	if err != nil {
+		log.Println("fetch article list:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	arts := res.(core.FetchArticleListRes).Articles
+
+	artCat := map[string]*data.Category{}
+	for _, art := range arts {
+		res, err := core.Do(core.FetchCategory{
+			ID:            art.CategoryID.Hex(),
+			CategoryStore: h.CategoryStore,
+		})
+		if err != nil {
+			log.Println("fetch category:", err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		artCat[art.ID.Hex()] = res.(core.FetchCategoryRes).Category
+	}
+
+	err = BackArticleListTpl.Execute(w, struct {
+		Articles        []data.Article
+		ArticleCategory map[string]*data.Category
+	}{
+		Articles:        arts,
+		ArticleCategory: artCat,
+	})
+	if err != nil {
+		log.Println("execute template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+}

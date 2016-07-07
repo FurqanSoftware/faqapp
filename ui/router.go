@@ -80,6 +80,18 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
 		})
+	r.NewRoute().
+		Name("ServeBackArticleList").
+		Methods("GET").
+		Path("/_/articles").
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+			Handler: ServeBackArticleList{
+				ArticleStore:  db.ArticleStore{Session: dbSess},
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
+		})
 
 	r.NewRoute().
 		Name("ServeAccountList").

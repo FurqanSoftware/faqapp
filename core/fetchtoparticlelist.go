@@ -21,7 +21,7 @@ func (a FetchTopArticleList) Validate() error {
 }
 
 func (a FetchTopArticleList) Do() (Result, error) {
-	arts, err := a.ArticleStore.List(bson.ObjectIdHex(a.CategoryID), 0, 8)
+	arts, err := a.ArticleStore.ListCategory(bson.ObjectIdHex(a.CategoryID), 0, 8)
 	if err != nil {
 		return nil, DatabaseError{"FetchTopArticleList", err}
 	}

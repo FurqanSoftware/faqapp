@@ -33,7 +33,7 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	cat := res.(core.FetchCategoryBySlugRes).Category
 
-	res, err = core.Do(core.FetchArticleList{
+	res, err = core.Do(core.FetchCategoryArticleList{
 		CategoryID:    cat.ID.Hex(),
 		CategoryStore: h.CategoryStore,
 		ArticleStore:  h.ArticleStore,
@@ -43,7 +43,7 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-	arts := res.(core.FetchArticleListRes).Articles
+	arts := res.(core.FetchCategoryArticleListRes).Articles
 
 	err = CategoryViewTpl.Execute(w, struct {
 		Category *data.Category

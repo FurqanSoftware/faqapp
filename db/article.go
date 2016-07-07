@@ -40,7 +40,20 @@ func (s ArticleStore) GetBySlug(catID bson.ObjectId, slug string) (*data.Article
 	return &art, nil
 }
 
-func (s ArticleStore) List(catID bson.ObjectId, skip, limit int) ([]data.Article, error) {
+func (s ArticleStore) List(skip, limit int) ([]data.Article, error) {
+	arts := []data.Article{}
+	err := s.Session.DB("").C(ArticleC).
+		Find(nil).
+		Skip(skip).
+		Limit(limit).
+		All(&arts)
+	if err != nil {
+		return nil, err
+	}
+	return arts, nil
+}
+
+func (s ArticleStore) ListCategory(catID bson.ObjectId, skip, limit int) ([]data.Article, error) {
 	arts := []data.Article{}
 	err := s.Session.DB("").C(ArticleC).
 		Find(bson.M{"category_id": catID}).

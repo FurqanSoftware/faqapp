@@ -1,0 +1,46 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<ul class="uk-tab" data-uk-tab>
+				{{template "backtabset" "settings"}}
+			</ul>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<div class="uk-panel">
+				<form class="uk-form" action="/_/settings" method="POST">
+					<table class="uk-table">
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{range $i, $stt := .Settings}}
+								<tr>
+									<td>
+										<input type="text" name="settings.{{$i}}.key" class="uk-width-1-1" value="{{$stt.Key}}">
+									</td>
+									<td>
+										<input type="text" name="settings.{{$i}}.value" class="uk-width-1-1" value="{{$stt.ValueJSON | printf "%s"}}">
+									</td>
+								</tr>
+							{{end}}
+							<tr>
+								<td>
+									<input type="text" name="settings.{{len .Settings}}.key" class="uk-width-1-1">
+								</td>
+								<td>
+									<input type="text" name="settings.{{len .Settings}}.value" class="uk-width-1-1">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<button class="uk-button">Update</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{{end}}

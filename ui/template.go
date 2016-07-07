@@ -7,6 +7,10 @@ import (
 	"net/http"
 )
 
+type Context struct {
+	Settings map[string]interface{}
+}
+
 func ExecuteTemplate(tpl *template.Template, w http.ResponseWriter, v interface{}) error {
 	b := bytes.Buffer{}
 	err := tpl.Execute(&b, v)

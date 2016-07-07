@@ -4,11 +4,38 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 
 	"git.furqan.io/faqapp/faqapp/core"
 	"git.furqan.io/faqapp/faqapp/db"
 )
+
+type PrepareContext struct {
+	SettingStore db.SettingStore
+	Handler      http.Handler
+}
+
+func (h PrepareContext) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := Context{}
+
+	res, err := core.Do(core.FetchSettingList{
+		SettingStore: h.SettingStore,
+	})
+	if err != nil {
+		log.Println("fetch setting list:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	ctx.Settings = map[string]interface{}{}
+	for _, stt := range res.(core.FetchSettingListRes).Settings {
+		ctx.Settings[stt.Key] = stt.Value
+	}
+
+	context.Set(r, "context", ctx)
+
+	h.Handler.ServeHTTP(w, r)
+}
 
 type RequireSession struct {
 	AccountStore db.AccountStore

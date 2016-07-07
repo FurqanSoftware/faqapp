@@ -21,16 +21,16 @@ func (a UpdateCategory) Validate() error {
 		return ValidationError{"UpdateCategory", "ID", IssueInvalid}
 	}
 	if a.Title == "" {
-		return ValidationError{"CreateCategory", "Title", IssueMissing}
+		return ValidationError{"UpdateCategory", "Title", IssueMissing}
 	}
 	if len(a.Title) > 128 {
-		return ValidationError{"CreateCategory", "Title", IssueTooLong}
+		return ValidationError{"UpdateCategory", "Title", IssueTooLong}
 	}
 	if a.Slug == "" {
-		return ValidationError{"CreateCategory", "Slug", IssueMissing}
+		return ValidationError{"UpdateCategory", "Slug", IssueMissing}
 	}
 	if len(a.Slug) > 128 {
-		return ValidationError{"CreateCategory", "Slug", IssueTooLong}
+		return ValidationError{"UpdateCategory", "Slug", IssueTooLong}
 	}
 	return nil
 }

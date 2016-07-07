@@ -14,3 +14,8 @@ func (s Setting) ValueJSON() (json.RawMessage, error) {
 	}
 	return json.RawMessage(v), nil
 }
+
+func (s Setting) ValueString() string {
+	v, _ := s.Value.(string)
+	return v
+}

@@ -14,6 +14,14 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 	})
 
 	t.NewRoute().
+		Name("ServeCustomCSS").
+		Methods("GET").
+		Path("/custom.css").
+		Handler(ServeCustomCSS{
+			SettingStore: db.SettingStore{Session: dbSess},
+		})
+
+	t.NewRoute().
 		Name("ServeLoginForm").
 		Methods("GET").
 		Path("/_/login").

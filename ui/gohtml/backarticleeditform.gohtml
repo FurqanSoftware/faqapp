@@ -1,0 +1,40 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<ul class="uk-tab" data-uk-tab>
+				{{template "backtabset" "articles"}}
+			</ul>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<div class="uk-panel">
+				<form class="uk-form" action="/_/articles/{{.Article.ID.Hex}}/edit" method="POST">
+					<legend>Edit Article</legend>
+					<div class="uk-form-row">
+						<select name="category_id" class="uk-width-4-6">
+							{{range $cat := .Categories}}
+								<option value="{{$cat.ID.Hex}}" {{if eq $cat.ID $.Article.CategoryID}}selected{{end}}>{{$cat.Title}}</option>
+							{{end}}
+						</select>
+					</div>
+					<div class="uk-form-row">
+						<input type="text" name="title" class="uk-width-4-6" placeholder="Title" value="{{.Article.Title}}">
+					</div>
+					<div class="uk-form-row">
+						<input type="text" name="slug" class="uk-width-4-6" placeholder="Slug" value="{{.Article.Slug}}">
+					</div>
+					<div class="uk-form-row">
+						<input type="number" name="order" class="uk-width-4-6" placeholder="Order" value="{{.Article.Order}}">
+					</div>
+					<div class="uk-form-row">
+						<textarea name="content" class="uk-width-4-6" placeholder="Content">{{.Article.Content}}</textarea>
+					</div>
+					<div class="uk-form-row">
+						<button class="uk-button">Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{{end}}

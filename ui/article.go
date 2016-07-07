@@ -174,3 +174,91 @@ func (h HandleBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 
 	http.Redirect(w, r, "/_/articles", http.StatusSeeOther)
 }
+
+var BackArticleEditFormTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backarticleeditform.gohtml", "ui/gohtml/backtabset.gohtml"))
+
+type ServeBackArticleEditForm struct {
+	ArticleStore  db.ArticleStore
+	CategoryStore db.CategoryStore
+}
+
+func (h ServeBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	res, err := core.Do(core.FetchCategoryList{
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("fetch category list:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	cats := res.(core.FetchCategoryListRes).Categories
+
+	res, err = core.Do(core.FetchArticle{
+		ID:           vars["article_id"],
+		ArticleStore: h.ArticleStore,
+	})
+	if err != nil {
+		log.Println("fetch article:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	art := res.(core.FetchArticleRes).Article
+
+	err = BackArticleEditFormTpl.Execute(w, struct {
+		Article    *data.Article
+		Categories []data.Category
+	}{
+		Categories: cats,
+		Article:    art,
+	})
+	if err != nil {
+		log.Println("execute template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+}
+
+type HandleBackArticleEditForm struct {
+	ArticleStore  db.ArticleStore
+	CategoryStore db.CategoryStore
+}
+
+type HandleBackArticleEditFormVal struct {
+	CategoryID string `schema:"category_id"`
+	Title      string `schema:"title"`
+	Slug       string `schema:"slug"`
+	Order      int    `schema:"order"`
+	Content    string `schema:"content"`
+}
+
+func (h HandleBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	body := HandleBackArticleEditFormVal{}
+	err := ParseRequestBody(r, &body)
+	if err != nil {
+		log.Println("parse request body:", err)
+		http.Error(w, "Bad Request", http.StatusBadRequest)
+		return
+	}
+
+	_, err = core.Do(core.UpdateArticle{
+		ID:            vars["article_id"],
+		CategoryID:    body.CategoryID,
+		Title:         body.Title,
+		Slug:          body.Slug,
+		Order:         body.Order,
+		Content:       body.Content,
+		ArticleStore:  h.ArticleStore,
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("update article:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/_/articles", http.StatusSeeOther)
+}

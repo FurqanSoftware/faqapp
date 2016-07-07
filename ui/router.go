@@ -115,6 +115,30 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
 		})
+	r.NewRoute().
+		Name("ServeBackArticleEditForm").
+		Methods("GET").
+		Path("/_/articles/{article_id}/edit").
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+			Handler: ServeBackArticleEditForm{
+				ArticleStore:  db.ArticleStore{Session: dbSess},
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
+		})
+	r.NewRoute().
+		Name("HandleBackArticleEditForm").
+		Methods("POST").
+		Path("/_/articles/{article_id}/edit").
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+			Handler: HandleBackArticleEditForm{
+				ArticleStore:  db.ArticleStore{Session: dbSess},
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
+		})
 
 	r.NewRoute().
 		Name("ServeAccountList").

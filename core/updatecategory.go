@@ -20,6 +20,18 @@ func (a UpdateCategory) Validate() error {
 	if !bson.IsObjectIdHex(a.ID) {
 		return ValidationError{"UpdateCategory", "ID", IssueInvalid}
 	}
+	if a.Title == "" {
+		return ValidationError{"CreateCategory", "Title", IssueMissing}
+	}
+	if len(a.Title) > 128 {
+		return ValidationError{"CreateCategory", "Title", IssueTooLong}
+	}
+	if a.Slug == "" {
+		return ValidationError{"CreateCategory", "Slug", IssueMissing}
+	}
+	if len(a.Slug) > 128 {
+		return ValidationError{"CreateCategory", "Slug", IssueTooLong}
+	}
 	return nil
 }
 

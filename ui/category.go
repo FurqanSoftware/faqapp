@@ -128,7 +128,76 @@ func (h HandleBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 		CategoryStore: h.CategoryStore,
 	})
 	if err != nil {
-		log.Println("create session:", err)
+		log.Println("create category:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/_/categories", http.StatusSeeOther)
+}
+
+var BackCategoryEditFormTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backcategoryeditform.gohtml", "ui/gohtml/backtabset.gohtml"))
+
+type ServeBackCategoryEditForm struct {
+	CategoryStore db.CategoryStore
+}
+
+func (h ServeBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	res, err := core.Do(core.FetchCategory{
+		ID:            vars["category_id"],
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("fetch category:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	cat := res.(core.FetchCategoryRes).Category
+
+	err = BackCategoryEditFormTpl.Execute(w, struct {
+		Category *data.Category
+	}{
+		Category: cat,
+	})
+	if err != nil {
+		log.Println("execute template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+}
+
+type HandleBackCategoryEditForm struct {
+	CategoryStore db.CategoryStore
+}
+
+type HandleBackCategoryEditFormVal struct {
+	Title string `schema:"title"`
+	Slug  string `schema:"slug"`
+	Order int    `schema:"order"`
+}
+
+func (h HandleBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	body := HandleBackCategoryEditFormVal{}
+	err := ParseRequestBody(r, &body)
+	if err != nil {
+		log.Println("parse request body:", err)
+		http.Error(w, "Bad Request", http.StatusBadRequest)
+		return
+	}
+
+	_, err = core.Do(core.UpdateCategory{
+		ID:            vars["category_id"],
+		Title:         body.Title,
+		Slug:          body.Slug,
+		Order:         body.Order,
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("update category:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

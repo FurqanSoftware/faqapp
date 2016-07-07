@@ -26,6 +26,11 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Slug:          vars["category_slug"],
 		CategoryStore: h.CategoryStore,
 	})
+	if err != nil {
+		log.Println("fetch category by slug:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 	cat := res.(core.FetchCategoryBySlugRes).Category
 
 	res, err = core.Do(core.FetchArticleList{
@@ -46,6 +51,35 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}{
 		Category: cat,
 		Articles: arts,
+	})
+	if err != nil {
+		log.Println("execute template:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+}
+
+var BackCategoryListTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/backcategorylist.gohtml"))
+
+type ServeBackCategoryList struct {
+	CategoryStore db.CategoryStore
+}
+
+func (h ServeBackCategoryList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	res, err := core.Do(core.FetchCategoryList{
+		CategoryStore: h.CategoryStore,
+	})
+	if err != nil {
+		log.Println("fetch category list:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	cats := res.(core.FetchCategoryListRes).Categories
+
+	err = BackCategoryListTpl.Execute(w, struct {
+		Categories []data.Category
+	}{
+		Categories: cats,
 	})
 	if err != nil {
 		log.Println("execute template:", err)

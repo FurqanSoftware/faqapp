@@ -7,7 +7,6 @@ import (
 )
 
 func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
-
 	r.NewRoute().
 		Name("ServeLoginForm").
 		Methods("GET").
@@ -20,6 +19,13 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Handler(HandleLoginForm{
 			AccountStore: db.AccountStore{Session: dbSess},
 			SessionStore: sessStore,
+		})
+	r.NewRoute().
+		Name("ServeBackCategoryList").
+		Methods("GET").
+		Path("/_/categories").
+		Handler(ServeBackCategoryList{
+			CategoryStore: db.CategoryStore{Session: dbSess},
 		})
 
 	r.NewRoute().

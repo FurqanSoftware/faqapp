@@ -1,0 +1,33 @@
+{{define "content"}}
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<ul class="uk-tab" data-uk-tab>
+				<li class="uk-active"><a href="/_/categories">Categories</a></li>
+				<li><a href="/_/articles">Articles</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
+			<div>
+				<a class="uk-button" href="/_/categories/new">New</a>
+			</div>
+			<table class="uk-table">
+				<thead>
+					<tr>
+						<th>Title</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{range $cat := .Categories}}
+						<tr>
+							<td>
+								<a href="/_/categories/{{$cat.ID.Hex}}">{{$cat.Title}}</a>
+							</td>
+						</tr>
+					{{end}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{{end}}

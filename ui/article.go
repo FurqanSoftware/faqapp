@@ -26,6 +26,11 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Slug:          vars["category_slug"],
 		CategoryStore: h.CategoryStore,
 	})
+	if err != nil {
+		log.Println("fetch category by slug:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 	cat := res.(core.FetchCategoryBySlugRes).Category
 
 	res, err = core.Do(core.FetchArticleBySlug{
@@ -35,7 +40,7 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		CategoryStore: h.CategoryStore,
 	})
 	if err != nil {
-		log.Println("fetch article list:", err)
+		log.Println("fetch article by slug:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

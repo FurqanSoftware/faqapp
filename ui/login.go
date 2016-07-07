@@ -77,3 +77,25 @@ func (h HandleLoginForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/_", http.StatusSeeOther)
 }
+
+type HandleLogout struct {
+	SessionStore sessions.Store
+}
+
+func (h HandleLogout) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	sess, err := GetSession(h.SessionStore, r, "s")
+	if err != nil {
+		log.Println("get session:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	delete(sess.Values, "token")
+	err = sess.Save(r, w)
+	if err != nil {
+		log.Println("save session:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}

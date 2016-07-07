@@ -21,11 +21,22 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 			SessionStore: sessStore,
 		})
 	r.NewRoute().
+		Name("HandleLoginForm").
+		Methods("GET").
+		Path("/_/logout").
+		Handler(HandleLogout{
+			SessionStore: sessStore,
+		})
+	r.NewRoute().
 		Name("ServeBackCategoryList").
 		Methods("GET").
 		Path("/_/categories").
-		Handler(ServeBackCategoryList{
-			CategoryStore: db.CategoryStore{Session: dbSess},
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+			Handler: ServeBackCategoryList{
+				CategoryStore: db.CategoryStore{Session: dbSess},
+			},
 		})
 
 	r.NewRoute().

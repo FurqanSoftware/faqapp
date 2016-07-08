@@ -102,7 +102,13 @@ type ServeBackCategoryNewForm struct {
 }
 
 func (h ServeBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := ExecuteTemplate(BackCategoryNewFormTpl, w, struct{}{})
+	ctx := GetContext(r)
+
+	err := ExecuteTemplate(BackCategoryNewFormTpl, w, struct {
+		Context Context
+	}{
+		Context: ctx,
+	})
 	if err != nil {
 		log.Println("execute template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

@@ -17,6 +17,8 @@ type ServeBackSettingForm struct {
 }
 
 func (h ServeBackSettingForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	res, err := core.Do(core.FetchSettingList{
 		SettingStore: h.SettingStore,
 	})
@@ -28,8 +30,10 @@ func (h ServeBackSettingForm) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	stts := res.(core.FetchSettingListRes).Settings
 
 	err = ExecuteTemplate(BackSettingFormTpl, w, struct {
+		Context  Context
 		Settings []data.Setting
 	}{
+		Context:  ctx,
 		Settings: stts,
 	})
 	if err != nil {

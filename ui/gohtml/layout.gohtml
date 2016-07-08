@@ -25,7 +25,17 @@
 	<body>
 		<nav class="uk-navbar">
 			<div class="uk-container uk-container-center">
-				<a href="/" class="uk-navbar-brand uk-navbar-center">Faqapp</a>
+				<a href="/" class="uk-navbar-brand uk-navbar-center">
+					{{$logoText := index .Context.Settings "brand.logo_text"}}
+					{{$logoTextURL := index .Context.Settings "brand.logo_image_url"}}
+					{{if $logoTextURL}}
+						<img src="{{$logoTextURL}}" alt="{{$logoText}}">
+					{{else if $logoText}}
+						{{$logoText}}
+					{{else}}
+						Faqapp
+					{{end}}
+				</a>
 			</div>
 		</nav>
 		<div class="uk-container uk-container-center">

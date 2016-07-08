@@ -17,7 +17,13 @@ type ServeLoginForm struct {
 }
 
 func (h ServeLoginForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := ExecuteTemplate(LoginFormTpl, w, struct{}{})
+	ctx := GetContext(r)
+
+	err := ExecuteTemplate(LoginFormTpl, w, struct {
+		Context Context
+	}{
+		Context: ctx,
+	})
 	if err != nil {
 		log.Println("execute template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

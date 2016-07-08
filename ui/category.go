@@ -20,6 +20,8 @@ type ServeCategoryView struct {
 }
 
 func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	vars := mux.Vars(r)
 
 	res, err := core.Do(core.FetchCategoryBySlug{
@@ -46,9 +48,11 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	arts := res.(core.FetchCategoryArticleListRes).Articles
 
 	err = ExecuteTemplate(CategoryViewTpl, w, struct {
+		Context  Context
 		Category *data.Category
 		Articles []data.Article
 	}{
+		Context:  ctx,
 		Category: cat,
 		Articles: arts,
 	})
@@ -66,6 +70,8 @@ type ServeBackCategoryList struct {
 }
 
 func (h ServeBackCategoryList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	res, err := core.Do(core.FetchCategoryList{
 		CategoryStore: h.CategoryStore,
 	})
@@ -77,8 +83,10 @@ func (h ServeBackCategoryList) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	cats := res.(core.FetchCategoryListRes).Categories
 
 	err = ExecuteTemplate(BackCategoryListTpl, w, struct {
+		Context    Context
 		Categories []data.Category
 	}{
+		Context:    ctx,
 		Categories: cats,
 	})
 	if err != nil {
@@ -143,6 +151,8 @@ type ServeBackCategoryEditForm struct {
 }
 
 func (h ServeBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	vars := mux.Vars(r)
 
 	res, err := core.Do(core.FetchCategory{
@@ -157,8 +167,10 @@ func (h ServeBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 	cat := res.(core.FetchCategoryRes).Category
 
 	err = ExecuteTemplate(BackCategoryEditFormTpl, w, struct {
+		Context  Context
 		Category *data.Category
 	}{
+		Context:  ctx,
 		Category: cat,
 	})
 	if err != nil {

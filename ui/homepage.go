@@ -18,6 +18,8 @@ type ServeHomepage struct {
 }
 
 func (h ServeHomepage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	res, err := core.Do(core.FetchCategoryList{
 		CategoryStore: h.CategoryStore,
 	})
@@ -44,9 +46,11 @@ func (h ServeHomepage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = ExecuteTemplate(HomepageTpl, w, struct {
+		Context             Context
 		Categories          []data.Category
 		TopCategoryArticles map[string][]data.Article
 	}{
+		Context:             ctx,
 		Categories:          cats,
 		TopCategoryArticles: topCatArts,
 	})

@@ -20,6 +20,8 @@ type ServeArticleView struct {
 }
 
 func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	vars := mux.Vars(r)
 
 	res, err := core.Do(core.FetchCategoryBySlug{
@@ -47,9 +49,11 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	art := res.(core.FetchArticleBySlugRes).Article
 
 	err = ExecuteTemplate(ArticleViewTpl, w, struct {
+		Context  Context
 		Article  *data.Article
 		Category *data.Category
 	}{
+		Context:  ctx,
 		Article:  art,
 		Category: cat,
 	})
@@ -68,6 +72,8 @@ type ServeBackArticleList struct {
 }
 
 func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	res, err := core.Do(core.FetchArticleList{
 		ArticleStore: h.ArticleStore,
 	})
@@ -93,9 +99,11 @@ func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	}
 
 	err = ExecuteTemplate(BackArticleListTpl, w, struct {
+		Context         Context
 		Articles        []data.Article
 		ArticleCategory map[string]*data.Category
 	}{
+		Context:         ctx,
 		Articles:        arts,
 		ArticleCategory: artCat,
 	})
@@ -113,6 +121,8 @@ type ServeBackArticleNewForm struct {
 }
 
 func (h ServeBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	res, err := core.Do(core.FetchCategoryList{
 		CategoryStore: h.CategoryStore,
 	})
@@ -124,8 +134,10 @@ func (h ServeBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reques
 	cats := res.(core.FetchCategoryListRes).Categories
 
 	err = ExecuteTemplate(BackArticleNewFormTpl, w, struct {
+		Context    Context
 		Categories []data.Category
 	}{
+		Context:    ctx,
 		Categories: cats,
 	})
 	if err != nil {
@@ -183,6 +195,8 @@ type ServeBackArticleEditForm struct {
 }
 
 func (h ServeBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext(r)
+
 	vars := mux.Vars(r)
 
 	res, err := core.Do(core.FetchCategoryList{
@@ -207,9 +221,11 @@ func (h ServeBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	art := res.(core.FetchArticleRes).Article
 
 	err = ExecuteTemplate(BackArticleEditFormTpl, w, struct {
+		Context    Context
 		Article    *data.Article
 		Categories []data.Category
 	}{
+		Context:    ctx,
 		Categories: cats,
 		Article:    art,
 	})

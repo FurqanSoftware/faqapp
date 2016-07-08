@@ -60,6 +60,10 @@ func (h HandleBackSettingForm) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	}
 
 	for _, stt := range body.Settings {
+		if stt.Key == "" {
+			continue
+		}
+
 		_, err = core.Do(core.UpdateSetting{
 			Key:          stt.Key,
 			Value:        stt.Value,

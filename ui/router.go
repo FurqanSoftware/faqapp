@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"net/http"
+
 	"git.furqan.io/faqapp/faqapp/db"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -21,6 +23,15 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 			SettingStore: db.SettingStore{Session: dbSess},
 		})
 
+	t.NewRoute().
+		Name("ServeLoginForm").
+		Methods("GET").
+		Path("/_").
+		Handler(RequireSession{
+			AccountStore: db.AccountStore{Session: dbSess},
+			SessionStore: sessStore,
+			Handler:      http.RedirectHandler("/_/categories", http.StatusSeeOther),
+		})
 	t.NewRoute().
 		Name("ServeLoginForm").
 		Methods("GET").

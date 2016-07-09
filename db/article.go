@@ -2,7 +2,6 @@ package db
 
 import (
 	"git.furqan.io/faqapp/faqapp/data"
-	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -17,9 +16,6 @@ func (s ArticleStore) Get(id bson.ObjectId) (*data.Article, error) {
 	err := s.Session.DB("").C(ArticleC).
 		FindId(id).
 		One(&art)
-	if err == mgo.ErrNotFound {
-		return nil, nil
-	}
 	if err != nil {
 		return nil, err
 	}
@@ -31,9 +27,6 @@ func (s ArticleStore) GetBySlug(catID bson.ObjectId, slug string) (*data.Article
 	err := s.Session.DB("").C(ArticleC).
 		Find(bson.M{"category_id": catID, "slug": slug}).
 		One(&art)
-	if err == mgo.ErrNotFound {
-		return nil, nil
-	}
 	if err != nil {
 		return nil, err
 	}

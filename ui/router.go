@@ -11,7 +11,9 @@ import (
 func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 	t := mux.NewRouter()
 	r.NewRoute().Handler(PrepareContext{
+		AccountStore: db.AccountStore{Session: dbSess},
 		SettingStore: db.SettingStore{Session: dbSess},
+		SessionStore: sessStore,
 		Handler:      t,
 	})
 
@@ -24,13 +26,11 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		})
 
 	t.NewRoute().
-		Name("ServeLoginForm").
+		Name("HandleBackLanderRedirect").
 		Methods("GET").
 		Path("/_").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
-			Handler:      http.RedirectHandler("/_/categories", http.StatusSeeOther),
+		Handler(RequireSessionAccount{
+			Handler: http.RedirectHandler("/_/categories", http.StatusSeeOther),
 		})
 	t.NewRoute().
 		Name("ServeLoginForm").
@@ -56,9 +56,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("ServeBackCategoryList").
 		Methods("GET").
 		Path("/_/categories").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: ServeBackCategoryList{
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
@@ -67,18 +65,14 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("ServeBackCategoryNewForm").
 		Methods("GET").
 		Path("/_/categories/new").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
-			Handler:      ServeBackCategoryNewForm{},
+		Handler(RequireSessionAccount{
+			Handler: ServeBackCategoryNewForm{},
 		})
 	t.NewRoute().
 		Name("HandleBackCategoryNewForm").
 		Methods("POST").
 		Path("/_/categories/new").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: HandleBackCategoryNewForm{
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
@@ -87,9 +81,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("ServeBackCategoryEditForm").
 		Methods("GET").
 		Path("/_/categories/{category_id}/edit").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: ServeBackCategoryEditForm{
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
@@ -98,9 +90,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("HandleBackCategoryEditForm").
 		Methods("POST").
 		Path("/_/categories/{category_id}/edit").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: HandleBackCategoryEditForm{
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
@@ -109,9 +99,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("ServeBackArticleList").
 		Methods("GET").
 		Path("/_/articles").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: ServeBackArticleList{
 				ArticleStore:  db.ArticleStore{Session: dbSess},
 				CategoryStore: db.CategoryStore{Session: dbSess},
@@ -121,9 +109,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("ServeBackArticleNewForm").
 		Methods("GET").
 		Path("/_/articles/new").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: ServeBackArticleNewForm{
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
@@ -132,9 +118,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("HandleBackArticleNewForm").
 		Methods("POST").
 		Path("/_/articles/new").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: HandleBackArticleNewForm{
 				ArticleStore:  db.ArticleStore{Session: dbSess},
 				CategoryStore: db.CategoryStore{Session: dbSess},
@@ -144,9 +128,7 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("ServeBackArticleEditForm").
 		Methods("GET").
 		Path("/_/articles/{article_id}/edit").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: ServeBackArticleEditForm{
 				ArticleStore:  db.ArticleStore{Session: dbSess},
 				CategoryStore: db.CategoryStore{Session: dbSess},
@@ -156,33 +138,50 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 		Name("HandleBackArticleEditForm").
 		Methods("POST").
 		Path("/_/articles/{article_id}/edit").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
+		Handler(RequireSessionAccount{
 			Handler: HandleBackArticleEditForm{
 				ArticleStore:  db.ArticleStore{Session: dbSess},
 				CategoryStore: db.CategoryStore{Session: dbSess},
 			},
 		})
 	t.NewRoute().
-		Name("ServeBackSettingForm").
+		Name("HandleBackSettingRedirect").
 		Methods("GET").
 		Path("/_/settings").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
-			Handler: ServeBackSettingForm{
+		Handler(RequireSessionAccount{
+			Handler: http.RedirectHandler("/_/settings/password", http.StatusSeeOther),
+		})
+	t.NewRoute().
+		Name("ServeBackSettingPasswordForm").
+		Methods("GET").
+		Path("/_/settings/password").
+		Handler(RequireSessionAccount{
+			Handler: ServeBackSettingPasswordForm{},
+		})
+	t.NewRoute().
+		Name("HandleBackSettingPasswordForm").
+		Methods("POST").
+		Path("/_/settings/password").
+		Handler(RequireSessionAccount{
+			Handler: HandleBackSettingPasswordForm{
+				AccountStore: db.AccountStore{Session: dbSess},
+			},
+		})
+	t.NewRoute().
+		Name("ServeBackSettingAdvancedForm").
+		Methods("GET").
+		Path("/_/settings/advanced").
+		Handler(RequireSessionAccount{
+			Handler: ServeBackSettingAdvancedForm{
 				SettingStore: db.SettingStore{Session: dbSess},
 			},
 		})
 	t.NewRoute().
-		Name("HandleBackSettingForm").
+		Name("HandleBackSettingAdvancedForm").
 		Methods("POST").
-		Path("/_/settings").
-		Handler(RequireSession{
-			AccountStore: db.AccountStore{Session: dbSess},
-			SessionStore: sessStore,
-			Handler: HandleBackSettingForm{
+		Path("/_/settings/advanced").
+		Handler(RequireSessionAccount{
+			Handler: HandleBackSettingAdvancedForm{
 				SettingStore: db.SettingStore{Session: dbSess},
 			},
 		})

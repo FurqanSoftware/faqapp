@@ -8,8 +8,15 @@
 	</div>
 	<div class="uk-grid">
 		<div class="uk-width-4-6 uk-push-1-6">
+			<ul class="uk-subnav uk-subnav-pill">
+				{{template "backsettingsnavset" "advanced"}}
+			</ul>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-4-6 uk-push-1-6">
 			<div class="uk-panel">
-				<form class="uk-form" action="/_/settings" method="POST">
+				<form class="uk-form" action="/_/settings/advanced" method="POST">
 					<table class="uk-table">
 						<thead>
 							<tr>

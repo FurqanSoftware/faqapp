@@ -10,13 +10,13 @@ import (
 )
 
 type AccountPassword struct {
-	Algorithm  string
-	Salt       []byte
-	Iteration  int
-	KeyLength  int
-	DerivedKey []byte
+	Algorithm  string `bson:"algorithm"`
+	Salt       []byte `bson:"salt"`
+	Iteration  int    `bson:"iteration"`
+	KeyLength  int    `bson:"key_length"`
+	DerivedKey []byte `bson:"derived_key"`
 
-	CreatedAt time.Time
+	CreatedAt time.Time `bson:"created_at"`
 }
 
 func NewAccountPassword(clear string) (AccountPassword, error) {

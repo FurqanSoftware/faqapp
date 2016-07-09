@@ -56,7 +56,7 @@ func (a UpdateArticle) Do() (Result, error) {
 	art.Title = a.Title
 	art.Slug = a.Slug
 	art.Order = a.Order
-	art.Content = a.Content
+	art.SetContent(a.Content)
 	err = a.ArticleStore.Put(art)
 	if err != nil {
 		return nil, DatabaseError{"UpdateArticle", err}

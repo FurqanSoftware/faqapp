@@ -48,6 +48,7 @@ func (a CreateArticle) Do() (res Result, err error) {
 		Slug:       a.Slug,
 		Order:      a.Order,
 	}
+	art.SetContent(a.Content)
 	err = a.ArticleStore.Put(&art)
 	if err != nil {
 		return nil, DatabaseError{"CreateArticle", err}

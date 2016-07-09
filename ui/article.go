@@ -30,7 +30,7 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("fetch category by slug:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	cat := res.(core.FetchCategoryBySlugRes).Category
@@ -43,7 +43,7 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("fetch article by slug:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	art := res.(core.FetchArticleBySlugRes).Article
@@ -79,7 +79,7 @@ func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	})
 	if err != nil {
 		log.Println("fetch article list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	arts := res.(core.FetchArticleListRes).Articles
@@ -92,7 +92,7 @@ func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		})
 		if err != nil {
 			log.Println("fetch category:", err)
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			HandleActionError(w, r, err)
 			return
 		}
 		artCat[art.ID.Hex()] = res.(core.FetchCategoryRes).Category
@@ -128,7 +128,7 @@ func (h ServeBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reques
 	})
 	if err != nil {
 		log.Println("fetch category list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	cats := res.(core.FetchCategoryListRes).Categories
@@ -180,7 +180,7 @@ func (h HandleBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	})
 	if err != nil {
 		log.Println("create article:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 
@@ -204,7 +204,7 @@ func (h ServeBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	})
 	if err != nil {
 		log.Println("fetch category list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	cats := res.(core.FetchCategoryListRes).Categories
@@ -215,7 +215,7 @@ func (h ServeBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	})
 	if err != nil {
 		log.Println("fetch article:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	art := res.(core.FetchArticleRes).Article
@@ -272,7 +272,7 @@ func (h HandleBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 	})
 	if err != nil {
 		log.Println("update article:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 

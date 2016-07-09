@@ -26,7 +26,7 @@ func (a UpdateSetting) Validate() error {
 
 func (a UpdateSetting) Do() (Result, error) {
 	stt, err := a.SettingStore.Get(a.Key)
-	if err != nil {
+	if err != nil && err != db.ErrNotFound {
 		return nil, DatabaseError{"UpdateSetting", err}
 	}
 	if stt == nil {

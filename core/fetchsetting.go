@@ -13,7 +13,7 @@ type FetchSetting struct {
 
 func (a FetchSetting) Do() (Result, error) {
 	stt, err := a.SettingStore.Get(a.Key)
-	if err != nil {
+	if err != nil && err != db.ErrNotFound {
 		return nil, DatabaseError{"FetchSetting", err}
 	}
 	return FetchSettingRes{

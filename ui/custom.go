@@ -20,7 +20,7 @@ func (h ServeCustomCSS) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("create session:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	stt := res.(core.FetchSettingRes).Setting

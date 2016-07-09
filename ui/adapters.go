@@ -24,7 +24,7 @@ func (h PrepareContext) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("fetch setting list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	ctx.Settings = map[string]interface{}{}
@@ -56,7 +56,7 @@ func (h RequireSession) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("verify session:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	if !res.(core.VerifySessionRes).Okay {

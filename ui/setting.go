@@ -24,7 +24,7 @@ func (h ServeBackSettingForm) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	})
 	if err != nil {
 		log.Println("fetch setting list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	stts := res.(core.FetchSettingListRes).Settings
@@ -75,7 +75,7 @@ func (h HandleBackSettingForm) ServeHTTP(w http.ResponseWriter, r *http.Request)
 		})
 		if err != nil {
 			log.Println("update setting bulk:", err)
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			HandleActionError(w, r, err)
 			return
 		}
 	}

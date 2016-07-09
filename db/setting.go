@@ -2,6 +2,7 @@ package db
 
 import (
 	"git.furqan.io/faqapp/faqapp/data"
+	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -16,6 +17,9 @@ func (s SettingStore) Get(key string) (*data.Setting, error) {
 	err := s.Session.DB("").C(SettingC).
 		Find(bson.M{"key": key}).
 		One(&stt)
+	if err == mgo.ErrNotFound {
+		return nil, ErrNotFound
+	}
 	if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,7 @@ package db
 
 import (
 	"git.furqan.io/faqapp/faqapp/data"
+	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -16,6 +17,9 @@ func (s AccountStore) Get(id bson.ObjectId) (*data.Account, error) {
 	err := s.Session.DB("").C(AccountC).
 		FindId(id).
 		One(&acc)
+	if err == mgo.ErrNotFound {
+		return nil, ErrNotFound
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -27,6 +31,9 @@ func (s AccountStore) GetByHandle(handle string) (*data.Account, error) {
 	err := s.Session.DB("").C(AccountC).
 		Find(bson.M{"handle": handle}).
 		One(&acc)
+	if err == mgo.ErrNotFound {
+		return nil, ErrNotFound
+	}
 	if err != nil {
 		return nil, err
 	}

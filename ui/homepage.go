@@ -25,7 +25,7 @@ func (h ServeHomepage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("fetch category list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	cats := res.(core.FetchCategoryListRes).Categories

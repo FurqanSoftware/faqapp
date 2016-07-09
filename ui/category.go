@@ -30,7 +30,7 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("fetch category by slug:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	cat := res.(core.FetchCategoryBySlugRes).Category
@@ -42,7 +42,7 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		log.Println("fetch article list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	arts := res.(core.FetchCategoryArticleListRes).Articles
@@ -77,7 +77,7 @@ func (h ServeBackCategoryList) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	})
 	if err != nil {
 		log.Println("fetch category list:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	cats := res.(core.FetchCategoryListRes).Categories
@@ -111,7 +111,7 @@ func (h ServeBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	})
 	if err != nil {
 		log.Println("execute template:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 }
@@ -131,7 +131,7 @@ func (h HandleBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 	err := ParseRequestBody(r, &body)
 	if err != nil {
 		log.Println("parse request body:", err)
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		HandleActionError(w, r, err)
 		return
 	}
 
@@ -167,7 +167,7 @@ func (h ServeBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 	})
 	if err != nil {
 		log.Println("fetch category:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 	cat := res.(core.FetchCategoryRes).Category
@@ -216,7 +216,7 @@ func (h HandleBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Req
 	})
 	if err != nil {
 		log.Println("update category:", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		HandleActionError(w, r, err)
 		return
 	}
 

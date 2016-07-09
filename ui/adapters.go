@@ -60,7 +60,7 @@ func (h RequireSession) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !res.(core.VerifySessionRes).Okay {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Redirect(w, r, "/_/login", http.StatusSeeOther)
 		return
 	}
 

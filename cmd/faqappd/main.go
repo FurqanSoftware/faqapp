@@ -21,6 +21,10 @@ func main() {
 	if err != nil {
 		log.Fatalln("open database session:", err)
 	}
+	err = db.MakeIndexes(dbSess)
+	if err != nil {
+		log.Fatalln("make indexes:", err)
+	}
 
 	err = CreateDefaultAccount(dbSess)
 	if err != nil {

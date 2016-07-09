@@ -196,6 +196,14 @@ func InitRouter(r *mux.Router, dbSess *db.Session, sessStore sessions.Store) {
 			CategoryStore: db.CategoryStore{Session: dbSess},
 		})
 	t.NewRoute().
+		Name("HandleArticleSearch").
+		Methods("GET").
+		Path("/search").
+		Handler(HandleArticleSearch{
+			ArticleStore:  db.ArticleStore{Session: dbSess},
+			CategoryStore: db.CategoryStore{Session: dbSess},
+		})
+	t.NewRoute().
 		Name("ServeCategoryView").
 		Methods("GET").
 		Path("/{category_slug}").

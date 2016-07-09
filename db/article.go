@@ -67,6 +67,21 @@ func (s ArticleStore) ListCategory(catID bson.ObjectId, skip, limit int) ([]data
 	return arts, nil
 }
 
+func (s ArticleStore) Search(text string, skip, limit int) ([]data.Article, error) {
+	arts := []data.Article{}
+	err := s.Session.DB("").C(ArticleC).
+		Find(bson.M{"$text": bson.M{"$search": text}}).
+		Select(bson.M{"score": bson.M{"$meta": "textScore"}}).
+		Sort("$textScore:score").
+		Skip(skip).
+		Limit(limit).
+		All(&arts)
+	if err != nil {
+		return nil, err
+	}
+	return arts, nil
+}
+
 func (s ArticleStore) Put(art *data.Article) error {
 	callPutHooks(art, art.ID == "")
 	return put(s.Session, ArticleC, art, art.ID)

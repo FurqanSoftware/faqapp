@@ -1,7 +1,9 @@
 {{define "content"}}
 	<div class="uk-grid">
 		<div class="uk-width-4-6 uk-push-1-6">
-			<input type="text" placeholder="How to ...?" class="uk-form-large uk-width-1-1">
+			<form class="uk-form" action="/search" method="GET">
+				<input type="text" name="q" placeholder="How to ...?" class="uk-form-large uk-width-1-1">
+			</form>
 		</div>
 	</div>
 	<div class="uk-grid">

@@ -3,8 +3,8 @@ package core
 import (
 	"time"
 
-	"git.furqan.io/faqapp/faqapp/data"
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/data"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 	"github.com/dgrijalva/jwt-go"
 	"gopkg.in/mgo.v2/bson"
 )

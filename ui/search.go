@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"git.furqan.io/faqapp/faqapp/core"
-	"git.furqan.io/faqapp/faqapp/data"
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/core"
+	"git.furqansoftware.net/faqapp/faqapp/data"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 	"github.com/gorilla/sessions"
 )
 

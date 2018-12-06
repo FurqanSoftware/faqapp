@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"git.furqan.io/faqapp/faqapp/cfg"
+	"git.furqansoftware.net/faqapp/faqapp/cfg"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/sessions"

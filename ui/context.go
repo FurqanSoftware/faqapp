@@ -3,9 +3,7 @@ package ui
 import (
 	"net/http"
 
-	"git.furqan.io/faqapp/faqapp/data"
-
-	"github.com/gorilla/context"
+	"git.furqansoftware.net/faqapp/faqapp/data"
 )
 
 type Context struct {
@@ -14,5 +12,5 @@ type Context struct {
 }
 
 func GetContext(r *http.Request) Context {
-	return context.Get(r, "context").(Context)
+	return r.Context().Value("context").(Context)
 }

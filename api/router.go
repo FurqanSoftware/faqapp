@@ -1,7 +1,7 @@
 package api
 
 import (
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 	"github.com/gorilla/mux"
 )
 

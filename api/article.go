@@ -6,8 +6,8 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"git.furqan.io/faqapp/faqapp/core"
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/core"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 )
 
 type CreateArticle struct {

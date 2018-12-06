@@ -1,7 +1,7 @@
 package db
 
 import (
-	"git.furqan.io/faqapp/faqapp/data"
+	"git.furqansoftware.net/faqapp/faqapp/data"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -83,6 +83,5 @@ func (s ArticleStore) Search(text string, skip, limit int) ([]data.Article, erro
 }
 
 func (s ArticleStore) Put(art *data.Article) error {
-	callPutHooks(art, art.ID == "")
 	return put(s.Session, ArticleC, art, art.ID)
 }

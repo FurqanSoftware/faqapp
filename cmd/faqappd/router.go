@@ -1,9 +1,9 @@
 package main
 
 import (
-	"git.furqan.io/faqapp/faqapp/api"
-	"git.furqan.io/faqapp/faqapp/db"
-	"git.furqan.io/faqapp/faqapp/ui"
+	"git.furqansoftware.net/faqapp/faqapp/api"
+	"git.furqansoftware.net/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/ui"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )

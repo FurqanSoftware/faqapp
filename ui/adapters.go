@@ -1,14 +1,14 @@
 package ui
 
 import (
+	"context"
 	"log"
 	"net/http"
 
-	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 
-	"git.furqan.io/faqapp/faqapp/core"
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/core"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 )
 
 type PrepareContext struct {
@@ -55,7 +55,7 @@ func (h PrepareContext) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		ctx.Settings[stt.Key] = stt.Value
 	}
 
-	context.Set(r, "context", ctx)
+	r = r.WithContext(context.WithValue(r.Context(), "context", ctx))
 
 	h.Handler.ServeHTTP(w, r)
 }

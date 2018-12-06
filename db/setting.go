@@ -1,7 +1,7 @@
 package db
 
 import (
-	"git.furqan.io/faqapp/faqapp/data"
+	"git.furqansoftware.net/faqapp/faqapp/data"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

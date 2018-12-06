@@ -7,9 +7,9 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"git.furqan.io/faqapp/faqapp/core"
-	"git.furqan.io/faqapp/faqapp/data"
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/core"
+	"git.furqansoftware.net/faqapp/faqapp/data"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 )
 
 var CategoryViewTpl = template.Must(template.ParseFiles("ui/gohtml/layout.gohtml", "ui/gohtml/categoryview.gohtml"))

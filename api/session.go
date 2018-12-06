@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"git.furqan.io/faqapp/faqapp/core"
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/core"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 )
 
 type CreateSession struct {

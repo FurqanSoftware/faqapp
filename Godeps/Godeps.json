@@ -1,5 +1,5 @@
 {
-	"ImportPath": "git.furqan.io/faqapp/faqapp",
+	"ImportPath": "git.furqansoftware.net/faqapp/faqapp",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v74",
 	"Packages": [

@@ -3,8 +3,8 @@ package core
 import (
 	"math"
 
-	"git.furqan.io/faqapp/faqapp/data"
-	"git.furqan.io/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/data"
+	"git.furqansoftware.net/faqapp/faqapp/db"
 )
 
 type FetchCategoryList struct {

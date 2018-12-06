@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"git.furqan.io/faqapp/faqapp/core"
+	"git.furqansoftware.net/faqapp/faqapp/core"
 )
 
 func HandleActionError(w http.ResponseWriter, r *http.Request, err error) {

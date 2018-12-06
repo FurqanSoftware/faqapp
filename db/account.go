@@ -1,7 +1,7 @@
 package db
 
 import (
-	"git.furqan.io/faqapp/faqapp/data"
+	"git.furqansoftware.net/faqapp/faqapp/data"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -54,6 +54,5 @@ func (s AccountStore) List(skip, limit int) ([]data.Account, error) {
 }
 
 func (s AccountStore) Put(acc *data.Account) error {
-	callPutHooks(acc, acc.ID == "")
 	return put(s.Session, AccountC, acc, acc.ID)
 }

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"git.furqan.io/faqapp/faqapp/cfg"
+	"git.furqansoftware.net/faqapp/faqapp/cfg"
 
 	"github.com/dgrijalva/jwt-go"
 )

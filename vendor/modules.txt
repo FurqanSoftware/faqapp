@@ -1,0 +1,28 @@
+# github.com/dgrijalva/jwt-go v0.0.0-20160705203006-01aeca54ebda
+github.com/dgrijalva/jwt-go
+# github.com/gorilla/context v0.0.0-20160525203319-aed02d124ae4
+github.com/gorilla/context
+# github.com/gorilla/mux v0.0.0-20160605233521-9fa818a44c2b
+github.com/gorilla/mux
+# github.com/gorilla/schema v0.0.0-20160624051519-8aac656cd31c
+github.com/gorilla/schema
+# github.com/gorilla/securecookie v0.0.0-20160525203348-ff356348f741
+github.com/gorilla/securecookie
+# github.com/gorilla/sessions v0.0.0-20160604165408-56ba4b0a11da
+github.com/gorilla/sessions
+# github.com/microcosm-cc/bluemonday v1.0.1
+github.com/microcosm-cc/bluemonday
+# github.com/russross/blackfriday v2.0.0+incompatible
+github.com/russross/blackfriday
+# github.com/shurcooL/sanitized_anchor_name v0.0.0-20170918181015-86672fcb3f95
+github.com/shurcooL/sanitized_anchor_name
+# golang.org/x/crypto v0.0.0-20160704103416-0c565bf13221
+golang.org/x/crypto/pbkdf2
+# golang.org/x/net v0.0.0-20181114220301-adae6a3d119a
+golang.org/x/net/html
+golang.org/x/net/html/atom
+# gopkg.in/mgo.v2 v2.0.0-20160609180028-29cc868a5ca6
+gopkg.in/mgo.v2/bson
+gopkg.in/mgo.v2
+gopkg.in/mgo.v2/internal/sasl
+gopkg.in/mgo.v2/internal/scram

@@ -12,10 +12,8 @@ github.com/gorilla/securecookie
 github.com/gorilla/sessions
 # github.com/microcosm-cc/bluemonday v1.0.1
 github.com/microcosm-cc/bluemonday
-# github.com/russross/blackfriday v2.0.0+incompatible
+# github.com/russross/blackfriday v1.5.2
 github.com/russross/blackfriday
-# github.com/shurcooL/sanitized_anchor_name v0.0.0-20170918181015-86672fcb3f95
-github.com/shurcooL/sanitized_anchor_name
 # golang.org/x/crypto v0.0.0-20160704103416-0c565bf13221
 golang.org/x/crypto/pbkdf2
 # golang.org/x/net v0.0.0-20181114220301-adae6a3d119a

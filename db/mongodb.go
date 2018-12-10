@@ -1,7 +1,7 @@
 package db
 
 import (
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -40,7 +40,6 @@ func callPutHooks(v interface{}, create bool) {
 }
 
 func put(sess *Session, col string, v interface{}, id bson.ObjectId) error {
-	callPutHooks(v, id == "")
 	_, err := sess.DB("").C(col).UpsertId(id, v)
 	return err
 }

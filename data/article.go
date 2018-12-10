@@ -29,7 +29,7 @@ type Article struct {
 
 func (a *Article) SetContent(content string) {
 	a.Content = content
-	a.ContentHTML = template.HTML(bluemonday.UGCPolicy().SanitizeBytes(blackfriday.Run([]byte(content))))
+	a.ContentHTML = template.HTML(bluemonday.UGCPolicy().SanitizeBytes(blackfriday.MarkdownCommon([]byte(content))))
 }
 
 func (a *Article) PreCreate() {

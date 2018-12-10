@@ -11,8 +11,12 @@ func CreateDefaultAccount(dbSess *db.Session) error {
 	res, err := core.Do(core.CreateDefaultAccount{
 		AccountStore: db.AccountStore{Session: dbSess},
 	})
+	if err != nil {
+		return err
+	}
+
 	if res.(core.CreateDefaultAccountRes).Created {
 		log.Println("default account created")
 	}
-	return err
+	return nil
 }

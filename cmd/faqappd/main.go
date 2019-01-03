@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"git.furqansoftware.net/faqapp/faqapp/cfg"
+	"git.furqansoftware.net/faqapp/faqapp/core"
 	"git.furqansoftware.net/faqapp/faqapp/db"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -24,6 +25,14 @@ func main() {
 	err = db.MakeIndexes(dbSess)
 	if err != nil {
 		log.Fatalln("make indexes:", err)
+	}
+
+	_, err = core.Do(core.PrepopulateSettings{
+		SettingStore: db.SettingStore{Session: dbSess},
+	})
+	if err != nil {
+		log.Println("prepopulate settings:", err)
+		return
 	}
 
 	err = CreateDefaultAccount(dbSess)

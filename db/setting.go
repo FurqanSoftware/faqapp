@@ -2,7 +2,7 @@ package db
 
 import (
 	"git.furqansoftware.net/faqapp/faqapp/data"
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 

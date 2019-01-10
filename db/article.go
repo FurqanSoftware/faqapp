@@ -56,7 +56,7 @@ func (s ArticleStore) List(skip, limit int) ([]data.Article, error) {
 func (s ArticleStore) ListCategory(catID bson.ObjectId, skip, limit int) ([]data.Article, error) {
 	arts := []data.Article{}
 	err := s.Session.DB("").C(ArticleC).
-		Find(bson.M{"category_id": catID}).
+		Find(bson.M{"category_id": catID, "published": true}).
 		Sort("order").
 		Skip(skip).
 		Limit(limit).
@@ -70,7 +70,7 @@ func (s ArticleStore) ListCategory(catID bson.ObjectId, skip, limit int) ([]data
 func (s ArticleStore) Search(text string, skip, limit int) ([]data.Article, error) {
 	arts := []data.Article{}
 	err := s.Session.DB("").C(ArticleC).
-		Find(bson.M{"$text": bson.M{"$search": text}}).
+		Find(bson.M{"$text": bson.M{"$search": text}, "published": true}).
 		Select(bson.M{"score": bson.M{"$meta": "textScore"}}).
 		Sort("$textScore:score").
 		Skip(skip).

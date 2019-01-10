@@ -10,7 +10,6 @@
 		<div class="uk-width-4-6 uk-push-1-6">
 			<div class="uk-panel">
 				<form class="uk-form" action="/_/articles/new" method="POST">
-					<legend>New Article</legend>
 					<div class="uk-form-row">
 						<select name="category_id" class="uk-width-4-6">
 							{{range $cat := .Categories}}
@@ -29,6 +28,9 @@
 					</div>
 					<div class="uk-form-row">
 						<textarea name="content" class="uk-width-4-6" placeholder="Content"></textarea>
+					</div>
+					<div class="uk-form-row">
+						<label><input type="checkbox" name="published" class="uk-checkbox"> Publish</label>
 					</div>
 					<div class="uk-form-row">
 						<button class="uk-button">Create</button>

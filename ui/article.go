@@ -48,6 +48,11 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	art := res.(core.FetchArticleBySlugRes).Article
 
+	if !art.Published {
+		http.Error(w, "Not Found", http.StatusNotFound)
+		return
+	}
+
 	err = ExecuteTemplate(ArticleViewTpl, w, struct {
 		Context  Context
 		Article  *data.Article

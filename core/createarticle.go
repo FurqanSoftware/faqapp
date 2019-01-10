@@ -12,6 +12,7 @@ type CreateArticle struct {
 	Slug       string
 	Order      int
 	Content    string
+	Published  bool
 
 	ArticleStore  db.ArticleStore
 	CategoryStore db.CategoryStore
@@ -47,8 +48,10 @@ func (a CreateArticle) Do() (res Result, err error) {
 		Title:      a.Title,
 		Slug:       a.Slug,
 		Order:      a.Order,
+		Published:  a.Published,
 	}
 	art.SetContent(a.Content)
+	art.SetPublishedAt(a.Published)
 	err = a.ArticleStore.Put(&art)
 	if err != nil {
 		return nil, DatabaseError{"CreateArticle", err}

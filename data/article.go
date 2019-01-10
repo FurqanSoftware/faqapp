@@ -23,13 +23,27 @@ type Article struct {
 	Content     string        `bson:"content"`
 	ContentHTML template.HTML `bson:"content_html"`
 
-	CreatedAt  time.Time `bson:"created_at"`
-	ModifiedAt time.Time `bson:"modified_at"`
+	CreatedAt   time.Time  `bson:"created_at"`
+	ModifiedAt  time.Time  `bson:"modified_at"`
+	Published   bool       `bson:"published"`
+	PublishedAt *time.Time `bson:"published_at"`
 }
 
 func (a *Article) SetContent(content string) {
 	a.Content = content
 	a.ContentHTML = template.HTML(bluemonday.UGCPolicy().SanitizeBytes(blackfriday.MarkdownCommon([]byte(content))))
+}
+
+func (a *Article) SetPublishedAt(published bool) {
+
+	if published {
+		a.Published = true
+		t := time.Now()
+		a.PublishedAt = &t
+	} else {
+		a.Published = false
+		a.PublishedAt = nil
+	}
 }
 
 func (a *Article) PreCreate() {

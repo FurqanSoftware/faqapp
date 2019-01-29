@@ -20,8 +20,12 @@ func (h ServeLoginForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := GetContext(r)
 
 	err := ExecuteTemplate(LoginFormTpl, w, struct {
+		Page
 		Context Context
 	}{
+		Page: Page{
+			Title: "Login" + " | Toph Help",
+		},
 		Context: ctx,
 	})
 	if err != nil {

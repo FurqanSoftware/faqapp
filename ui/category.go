@@ -48,10 +48,14 @@ func (h ServeCategoryView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	arts := res.(core.FetchCategoryArticleListRes).Articles
 
 	err = ExecuteTemplate(CategoryViewTpl, w, struct {
+		Page
 		Context  Context
 		Category *data.Category
 		Articles []data.Article
 	}{
+		Page: Page{
+			Title: cat.Title + " | Toph Help",
+		},
 		Context:  ctx,
 		Category: cat,
 		Articles: arts,
@@ -83,9 +87,13 @@ func (h ServeBackCategoryList) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	cats := res.(core.FetchCategoryListRes).Categories
 
 	err = ExecuteTemplate(BackCategoryListTpl, w, struct {
+		Page
 		Context    Context
 		Categories []data.Category
 	}{
+		Page: Page{
+			Title: "Categories" + " | Toph Help",
+		},
 		Context:    ctx,
 		Categories: cats,
 	})
@@ -105,8 +113,12 @@ func (h ServeBackCategoryNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	ctx := GetContext(r)
 
 	err := ExecuteTemplate(BackCategoryNewFormTpl, w, struct {
+		Page
 		Context Context
 	}{
+		Page: Page{
+			Title: "Create New Category" + " | Toph Help",
+		},
 		Context: ctx,
 	})
 	if err != nil {
@@ -173,9 +185,13 @@ func (h ServeBackCategoryEditForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 	cat := res.(core.FetchCategoryRes).Category
 
 	err = ExecuteTemplate(BackCategoryEditFormTpl, w, struct {
+		Page
 		Context  Context
 		Category *data.Category
 	}{
+		Page: Page{
+			Title: cat.Title + " | Toph Help",
+		},
 		Context:  ctx,
 		Category: cat,
 	})

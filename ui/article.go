@@ -54,10 +54,14 @@ func (h ServeArticleView) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = ExecuteTemplate(ArticleViewTpl, w, struct {
+		Page
 		Context  Context
 		Article  *data.Article
 		Category *data.Category
 	}{
+		Page: Page{
+			Title: art.Title + " | Toph Help",
+		},
 		Context:  ctx,
 		Article:  art,
 		Category: cat,
@@ -104,10 +108,14 @@ func (h ServeBackArticleList) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	}
 
 	err = ExecuteTemplate(BackArticleListTpl, w, struct {
+		Page
 		Context         Context
 		Articles        []data.Article
 		ArticleCategory map[string]*data.Category
 	}{
+		Page: Page{
+			Title: "Articles" + " | Toph Help",
+		},
 		Context:         ctx,
 		Articles:        arts,
 		ArticleCategory: artCat,
@@ -139,9 +147,13 @@ func (h ServeBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reques
 	cats := res.(core.FetchCategoryListRes).Categories
 
 	err = ExecuteTemplate(BackArticleNewFormTpl, w, struct {
+		Page
 		Context    Context
 		Categories []data.Category
 	}{
+		Page: Page{
+			Title: "Create New Article" + " | Toph Help",
+		},
 		Context:    ctx,
 		Categories: cats,
 	})
@@ -226,10 +238,14 @@ func (h ServeBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 	art := res.(core.FetchArticleRes).Article
 
 	err = ExecuteTemplate(BackArticleEditFormTpl, w, struct {
+		Page
 		Context    Context
 		Article    *data.Article
 		Categories []data.Category
 	}{
+		Page: Page{
+			Title: art.Title + " | Toph Help",
+		},
 		Context:    ctx,
 		Categories: cats,
 		Article:    art,

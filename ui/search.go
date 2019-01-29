@@ -60,11 +60,15 @@ func (h HandleArticleSearch) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = ExecuteTemplate(ArticleSearchTpl, w, struct {
+		Page
 		Context         Context
 		Query           string
 		Articles        []data.Article
 		ArticleCategory map[string]*data.Category
 	}{
+		Page: Page{
+			Title: body.Query + " | Articles" + " | Toph Help",
+		},
 		Context:         ctx,
 		Query:           body.Query,
 		Articles:        arts,

@@ -18,8 +18,12 @@ func (h ServeBackSettingPasswordForm) ServeHTTP(w http.ResponseWriter, r *http.R
 	ctx := GetContext(r)
 
 	err := ExecuteTemplate(BackSettingPasswordFormTpl, w, struct {
+		Page
 		Context Context
 	}{
+		Page: Page{
+			Title: "Reset Password" + " | Toph Help",
+		},
 		Context: ctx,
 	})
 	if err != nil {
@@ -86,9 +90,13 @@ func (h ServeBackSettingAdvancedForm) ServeHTTP(w http.ResponseWriter, r *http.R
 	stts := res.(core.FetchSettingListRes).Settings
 
 	err = ExecuteTemplate(BackSettingAdvancedFormTpl, w, struct {
+		Page
 		Context  Context
 		Settings []data.Setting
 	}{
+		Page: Page{
+			Title: "Advanced Settings" + " | Toph Help",
+		},
 		Context:  ctx,
 		Settings: stts,
 	})

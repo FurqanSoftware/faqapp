@@ -46,10 +46,14 @@ func (h ServeHomepage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = ExecuteTemplate(HomepageTpl, w, struct {
+		Page
 		Context             Context
 		Categories          []data.Category
 		TopCategoryArticles map[string][]data.Article
 	}{
+		Page: Page{
+			Title: "Toph Help",
+		},
 		Context:             ctx,
 		Categories:          cats,
 		TopCategoryArticles: topCatArts,

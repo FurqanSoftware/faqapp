@@ -3,7 +3,8 @@
 <html>
 	<head profile="http://www.w3.org/2005/10/profile">
 		<meta charset="utf-8">
-		<title>Faqapp</title>
+		<title>{{.Page.Title}}</title>
+
 		{{$favicon := index .Context.Settings "page.favicon_url"}}
 		<link rel="icon" type="image/png" href="{{$favicon}}">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro" media="screen" charset="utf-8">

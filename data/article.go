@@ -34,8 +34,7 @@ func (a *Article) SetContent(content string) {
 	a.ContentHTML = template.HTML(bluemonday.UGCPolicy().SanitizeBytes(blackfriday.MarkdownCommon([]byte(content))))
 }
 
-func (a *Article) SetPublishedAt(published bool) {
-
+func (a *Article) SetPublished(published bool) {
 	if published {
 		a.Published = true
 		t := time.Now()

@@ -175,6 +175,7 @@ type HandleBackArticleNewFormVal struct {
 	Slug       string `schema:"slug"`
 	Order      int    `schema:"order"`
 	Content    string `schema:"content"`
+	Published  bool   `schema:"published"`
 }
 
 func (h HandleBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -192,6 +193,7 @@ func (h HandleBackArticleNewForm) ServeHTTP(w http.ResponseWriter, r *http.Reque
 		Slug:          body.Slug,
 		Order:         body.Order,
 		Content:       body.Content,
+		Published:     body.Published,
 		ArticleStore:  h.ArticleStore,
 		CategoryStore: h.CategoryStore,
 	})
@@ -268,6 +270,7 @@ type HandleBackArticleEditFormVal struct {
 	Slug       string `schema:"slug"`
 	Order      int    `schema:"order"`
 	Content    string `schema:"content"`
+	Published  bool   `schema:"published"`
 }
 
 func (h HandleBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -288,6 +291,7 @@ func (h HandleBackArticleEditForm) ServeHTTP(w http.ResponseWriter, r *http.Requ
 		Slug:          body.Slug,
 		Order:         body.Order,
 		Content:       body.Content,
+		Published:     body.Published,
 		ArticleStore:  h.ArticleStore,
 		CategoryStore: h.CategoryStore,
 	})

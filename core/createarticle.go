@@ -51,7 +51,7 @@ func (a CreateArticle) Do() (res Result, err error) {
 		Published:  a.Published,
 	}
 	art.SetContent(a.Content)
-	art.SetPublishedAt(a.Published)
+	art.SetPublished(a.Published)
 	err = a.ArticleStore.Put(&art)
 	if err != nil {
 		return nil, DatabaseError{"CreateArticle", err}

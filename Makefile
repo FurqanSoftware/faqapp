@@ -8,7 +8,7 @@ IMAGE_NAME = faqapp/faqapp
 IMAGE_TAG = $(VERSION:v%=%)
 
 faqappd: clean
-	$(GO_BUILD_ENV) go build -v -o $@ ./cmd/$@
+	$(GO_BUILD_ENV) go build -mod=vendor -v -o $@ ./cmd/$@
 
 clean:
 	rm -f faqappd

@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"git.furqansoftware.net/faqapp/faqapp/cfg"
 	"git.furqansoftware.net/faqapp/faqapp/core"
 	"git.furqansoftware.net/faqapp/faqapp/db"
+	"git.furqansoftware.net/faqapp/faqapp/health"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
@@ -41,6 +43,8 @@ func main() {
 	}
 
 	sessStore := sessions.NewCookieStore([]byte(cfg.Secret))
+
+	go health.Loop(11*time.Second, dbSess)
 
 	r := mux.NewRouter()
 	InitRouter(r, dbSess, sessStore)

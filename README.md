@@ -9,3 +9,8 @@ At [Furqan Software](https://furqansoftware.com/), Faqapp powers [Toph Help](htt
 ## Deploy to Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/FurqanSoftware/faqapp)
+
+```
+Username: faqapp
+Password: p@assword
+```

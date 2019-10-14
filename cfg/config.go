@@ -26,6 +26,9 @@ func Load() error {
 	errs = append(errs, loadInt(&Port, "PORT", 5000))
 	errs = append(errs, loadString(&Secret, "SECRET", ""))
 	errs = append(errs, loadString(&MongoURL, "MONGO_URL", ""))
+	if MongoURL == "" {
+		errs = append(errs, loadString(&MongoURL, "MONGODB_URI", ""))
+	}
 	if len(errs) != 0 {
 		return errs[0]
 	}

@@ -16,3 +16,5 @@ require (
 	gopkg.in/mgo.v2 v2.0.0-20160609180028-29cc868a5ca6
 	gopkg.in/yaml.v2 v2.2.1 // indirect
 )
+
+go 1.13

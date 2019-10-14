@@ -20,7 +20,7 @@ golang.org/x/crypto/pbkdf2
 golang.org/x/net/html
 golang.org/x/net/html/atom
 # gopkg.in/mgo.v2 v2.0.0-20160609180028-29cc868a5ca6
-gopkg.in/mgo.v2/bson
 gopkg.in/mgo.v2
+gopkg.in/mgo.v2/bson
 gopkg.in/mgo.v2/internal/sasl
 gopkg.in/mgo.v2/internal/scram

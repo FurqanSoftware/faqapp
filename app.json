@@ -12,5 +12,11 @@
 	],
 	"addons": [
 		"mongolab:sandbox"
-	]
+	],
+	"env": {
+		"SECRET": {
+			"description": "A secret key for verifying the integrity of signed cookies.",
+			"generator": "secret"
+		}
+	}
 }

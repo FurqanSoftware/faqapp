@@ -14,6 +14,8 @@ At [Furqan Software](https://furqansoftware.com/), Faqapp powers [Toph Help](htt
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/FurqanSoftware/faqapp)
 
+You can enter the administration area by navigating to "/_" (i.e. "https://{appname}.herokuapp.com/_") and logging in with:
+
 ```
 Username: faqapp
 Password: p@assword

@@ -1,0 +1,16 @@
+{
+	"name": "Faqapp",
+	"description": "A simple Go Markdown knowledge base app.",
+	"repository": "https://github.com/FurqanSoftware/faqapp",
+	"logo": "https://raw.githubusercontent.com/FurqanSoftware/bullet/master/assets/bullet_128.png",
+	"keywords": [
+		"go",
+		"golang",
+		"markdown",
+		"knowdgebase",
+		"app"
+	],
+	"addons": [
+		"mongolab:sandbox"
+	]
+}

@@ -1,7 +1,13 @@
+# github.com/aymerick/douceur v0.2.0
+github.com/aymerick/douceur/css
+# github.com/chris-ramon/douceur v0.2.0
+github.com/chris-ramon/douceur/parser
 # github.com/dgrijalva/jwt-go v0.0.0-20160705203006-01aeca54ebda
 github.com/dgrijalva/jwt-go
 # github.com/gorilla/context v0.0.0-20160525203319-aed02d124ae4
 github.com/gorilla/context
+# github.com/gorilla/css v1.0.0
+github.com/gorilla/css/scanner
 # github.com/gorilla/mux v0.0.0-20160605233521-9fa818a44c2b
 github.com/gorilla/mux
 # github.com/gorilla/schema v0.0.0-20160624051519-8aac656cd31c
@@ -10,13 +16,13 @@ github.com/gorilla/schema
 github.com/gorilla/securecookie
 # github.com/gorilla/sessions v0.0.0-20160604165408-56ba4b0a11da
 github.com/gorilla/sessions
-# github.com/microcosm-cc/bluemonday v1.0.1
+# github.com/microcosm-cc/bluemonday v1.0.5
 github.com/microcosm-cc/bluemonday
 # github.com/russross/blackfriday v1.5.2
 github.com/russross/blackfriday
 # golang.org/x/crypto v0.0.0-20160704103416-0c565bf13221
 golang.org/x/crypto/pbkdf2
-# golang.org/x/net v0.0.0-20181114220301-adae6a3d119a
+# golang.org/x/net v0.0.0-20181220203305-927f97764cc3
 golang.org/x/net/html
 golang.org/x/net/html/atom
 # gopkg.in/mgo.v2 v2.0.0-20160609180028-29cc868a5ca6

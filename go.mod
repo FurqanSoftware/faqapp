@@ -8,10 +8,9 @@ require (
 	github.com/gorilla/securecookie v0.0.0-20160525203348-ff356348f741 // indirect
 	github.com/gorilla/sessions v0.0.0-20160604165408-56ba4b0a11da
 	github.com/kr/pretty v0.1.0 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.1
+	github.com/microcosm-cc/bluemonday v1.0.16
 	github.com/russross/blackfriday v1.5.2
 	golang.org/x/crypto v0.0.0-20160704103416-0c565bf13221
-	golang.org/x/net v0.0.0-20181114220301-adae6a3d119a // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20160609180028-29cc868a5ca6
 	gopkg.in/yaml.v2 v2.2.1 // indirect

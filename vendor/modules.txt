@@ -20,9 +20,9 @@ github.com/microcosm-cc/bluemonday
 github.com/microcosm-cc/bluemonday/css
 # github.com/russross/blackfriday v1.5.2
 github.com/russross/blackfriday
-# golang.org/x/crypto v0.0.0-20160704103416-0c565bf13221
+# golang.org/x/crypto v0.1.0
 golang.org/x/crypto/pbkdf2
-# golang.org/x/net v0.0.0-20210614182718-04defd469f4e
+# golang.org/x/net v0.1.0
 golang.org/x/net/html
 golang.org/x/net/html/atom
 # gopkg.in/mgo.v2 v2.0.0-20160609180028-29cc868a5ca6
